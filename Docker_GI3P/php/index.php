@@ -6,7 +6,7 @@
     </header>
 
     <main>
-        <div id="menu">
+        <div class="menu">
         <hr>
         <a href="usuaris.php"><input id="user-btn" type="button" value="Usuaris"></a>
         <a href="tecnics.php"><input id="tech-btn" type="button" value="Tècnics"></a>
