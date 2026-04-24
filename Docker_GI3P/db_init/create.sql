@@ -27,15 +27,47 @@ FLUSH PRIVILEGES;
 -- Després de crear la base de dades, cal seleccionar-la per treballar-hi
 USE incidenciesbbdd;
 
+CREATE TABLE `departament` (
+  `idDept` int(9) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(255) NOT NULL,
+  PRIMARY KEY (`idDept`)
+) ENGINE=InnoDB;
 
-CREATE TABLE cases (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
-);
+CREATE TABLE `tecnic` (
+  `idTecnic` int(9) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(255) NOT NULL,
+  PRIMARY KEY (`idTecnic`)
+) ENGINE=InnoDB;
 
+CREATE TABLE `tipologia` (
+  `idTipo` int(9) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(255) NOT NULL,
+  PRIMARY KEY (`idTipo`)
+) ENGINE=InnoDB;
 
+CREATE TABLE `incidencia` (
+  `id` int(9) NOT NULL AUTO_INCREMENT,
+  `dataInici` date NOT NULL,
+  `prioritat` enum('Baix','Mitjà','Alt') NOT NULL,
+  `descripcio` varchar(255) NOT NULL,
+  `dataFi` date DEFAULT NULL,
+  `tecnic` int(11) DEFAULT NULL,
+  `departament` int(11) DEFAULT NULL,
+  `tipologia` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_inc_tecnic` FOREIGN KEY (`tecnic`) REFERENCES `tecnic` (`idTecnic`) ON DELETE SET NULL,
+  CONSTRAINT `fk_inc_dept` FOREIGN KEY (`departament`) REFERENCES `departament` (`idDept`) ON DELETE SET NULL,
+  CONSTRAINT `fk_inc_tipo` FOREIGN KEY (`tipologia`) REFERENCES `tipologia` (`idTipo`) ON DELETE SET NULL
+) ENGINE=InnoDB;
 
--- Afegim algunes dades inicials a la taula cases
-INSERT INTO cases (name) VALUES ('Casa Milà');
-INSERT INTO cases (name) VALUES ('Casa Batlló');
-INSERT INTO cases (name) VALUES ('Casa Gaudí');
+CREATE TABLE `actuacions` (
+  `idActuacio` int(9) NOT NULL AUTO_INCREMENT,
+  `dataActuacio` date NOT NULL,
+  `descActuacio` varchar(255) NOT NULL,
+  `visible` tinyint(1) NOT NULL,
+  `temps` int(11) NOT NULL,
+  `incidencia` int(9) NOT NULL,
+  PRIMARY KEY (`idActuacio`),
+  CONSTRAINT `fk_act_incidencia` FOREIGN KEY (`incidencia`) REFERENCES `incidencia` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
