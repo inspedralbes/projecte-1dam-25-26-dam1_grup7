@@ -1,3 +1,10 @@
+:root{
+    --u-primary-color: #0EA5E9;
+    --t-primary-color: #6366F1;
+    --a-primary-color: #BE123C;
+}
+
+
 body{
     background-color: #F8FAFC;
 }
@@ -7,4 +14,18 @@ h1{
 }
 
 input{
+    padding: 5px;
+    border-radius: solid;
+}
+
+#user-btn{
+    background-color: var(--u-primary-color);
+}
+
+#tech-btn{
+    background-color: var(--t-primary-color);
+}
+
+#admin-btn{
+    background-color: var(--a-primary-color);
 }
