@@ -2,11 +2,12 @@
     --u-primary-color: #0EA5E9;
     --t-primary-color: #6366F1;
     --a-primary-color: #BE123C;
+    --bckg-color: #d1d1d1;
 }
 
 
 body{
-    background-color: #F8FAFC;
+    background-color: var(--bckg-color);
     font-family: sans-serif;
 }
 
@@ -34,4 +35,8 @@ input{
 
 #admin-btn{
     background-color: var(--a-primary-color);
+}
+
+footer{
+    text-align: center;
 }
