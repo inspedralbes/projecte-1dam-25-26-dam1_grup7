@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inici</title>
+    <link rel="stylesheet" href="css/style.css">
+    <title>Gestor d'Incidències</title>
 </head>
 
 <body>
@@ -12,26 +13,16 @@
         <h1>Gestor d'incidències</h1>
     </header>
 
-    <p>Aquesta pàgina inclou codi php</p>
-    <?php
-    echo "<h2>Hola, món!</h2>";
-    echo "<p>Hora actual: " . date("H:i:s") . "</p>";
-    ?>
-    <h2>Variables</h2>
-    <p>Les variables s'han d'utilitzar per a definir la cadena de connexió independentment del codi</p>
-    <?php
-    $v1 = getenv('VAR1') ?: 'Ups, variable no definida';
-    $v2 = getenv('VAR2') ?: 'Ups, variable no definida';
-    echo "<p>El valor de la variable d'entorn VAR1 és: <strong>$v1</strong> </p>";
-    echo "<p>El valor de la variable d'entorn VAR2 és: <strong>$v2</strong></p>";
-    ?>
-    <div id="menu">
+    <main>
+        <div id="menu">
         <hr>
-        <p><a href="index.php">Portada</a> </p>
-        <p><a href="llistar.php">Llistar</a></p>
-        <p><a href="crear.php">Crear</a></p>
+        <a href="usuaris.php"><input type="button" value="Usuaris"></a>
+        <a href="tecnics.php"><input type="button" value="Tècnics"></a>
+        <a href="admin.php"><input type="button" value="Administradors"></a>
     </div>
-    <p>Fi de la pàgina</p>
+    </main>
+
+    
 
 <footer>
     <p>Projecte Final Unai i Sergi</p>
