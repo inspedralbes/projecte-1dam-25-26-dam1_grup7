@@ -8,7 +8,10 @@
 </head>
 
 <body>
-    <h1>Pàgina inicial</h1>
+    <header>
+        <h1>Gestor d'incidències</h1>
+    </header>
+
     <p>Aquesta pàgina inclou codi php</p>
     <?php
     echo "<h2>Hola, món!</h2>";
@@ -29,6 +32,11 @@
         <p><a href="crear.php">Crear</a></p>
     </div>
     <p>Fi de la pàgina</p>
+
+<footer>
+    <p>Projecte Final Unai i Sergi</p>
+</footer>
+
 </body>
 
 </html>
