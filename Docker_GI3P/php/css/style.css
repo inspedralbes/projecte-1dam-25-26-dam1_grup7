@@ -1,42 +1,173 @@
-:root{
-    --u-primary-color: #0EA5E9;
-    --t-primary-color: #6366F1;
-    --a-primary-color: #BE123C;
-    --bckg-color: #d1d1d1;
+:root {
+    --u-primary-color: #0ea5e9;
+    --t-primary-color: #6366f1;
+    --a-primary-color: #be123c;
+    --bckg-color: #f8fafc;
+    
+    
+
+    --user-bg: #f0f9ff;           
+    --user-main: #0369a1;         
+    --user-secondary: #0ea5e9;    
+    --user-3: #67e8f9;           
+    --user-text: #0c4a6e;      
+    
+    
+    --tech-bg: #f5f3ff;       
+    --tech-main: #874eeb;      
+    --tech-secondary: #9571ff; 
+    --tech-text: #4c1d95;
+
+
+    --admin-bg: #fff1f2;        
+    --admin-main: #be123c;      
+    --admin-secondary: #fb7185; 
+    --admin-3: #fda4af;         
+    --admin-text: #4c0519;     
 }
 
 
-body{
+/* --- Users --- */
+body.page-users {
+    background-color: var(--user-bg);
+}
+
+body.page-users h1 {
+    color: var(--user-text);
+}
+
+.btn-crear { 
+    background-color: var(--user-main); 
+    color: white; 
+}
+
+.btn-consultar-inc { 
+    background-color: var(--user-secondary); 
+    color: white; 
+}
+
+.btn-consultar-dep {
+    background-color: var(--user-3); 
+    color: var(--user-text); 
+}
+/*-----------------------------------*/
+
+
+/* --- TÈCNICS --- */
+body.page-tecnics {
+    background-color: var(--tech-bg);
+}
+
+body.page-tecnics h1 {
+    color: var(--tech-text);
+}
+
+body.page-tecnics .btn-crear-actu {
+    background-color: var(--tech-main);
+    color: white;
+}
+
+body.page-tecnics .btn-consultar-dep {
+    background-color: var(--tech-secondary);
+    color: var(--tech-text);
+}
+
+/*-----------------------------------*/
+
+/* --- ADMIN --- */
+
+body.page-admin {
+    background-color: var(--admin-bg);
+}
+
+body.page-admin h1 {
+    color: var(--admin-text);
+}
+
+body.page-admin .btn-assign-inc { 
+    background-color: var(--admin-main); 
+    color: white; 
+}
+
+body.page-admin .btn-inf-tecn { 
+    background-color: var(--admin-secondary); 
+    color: white; 
+}
+
+body.page-admin .btn-est-accs { 
+    background-color: var(--admin-3); 
+    color: var(--admin-text); 
+}
+
+/*-----------------------------------*/
+
+
+
+body {
     background-color: var(--bckg-color);
     font-family: sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-h1{
+header {
+    padding: 30px;
+}
+
+h1 {
     text-align: center;
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #1e293b;
 }
 
-.menu{
-    text-align: center;
-
+hr {
+    border: 0;
+    height: 1px;
+    background: white;
+    margin: 20px 0;
 }
 
-input{
-    padding: 5px;
+main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu {
+    display: flex;
+    gap: 30px;
+}
+
+input[type="button"] {
+    padding: 20px;
     border-radius: 25% 10%;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    border: hidden;
+    transition: border-radius 0.4s ease;
 }
 
-#user-btn{
-    background-color: var(--u-primary-color);
+input[type="button"]:hover {
+    border-radius: 50% 20% / 10% 40%;
 }
 
-#tech-btn{
-    background-color: var(--t-primary-color);
-}
+#user-btn { background-color: var(--u-primary-color); }
+#tech-btn { background-color: var(--t-primary-color); }
+#admin-btn { background-color: var(--a-primary-color); }
 
-#admin-btn{
-    background-color: var(--a-primary-color);
-}
-
-footer{
+footer {
+    padding: 20px;
     text-align: center;
+    font-size: 16px;
+    color: #64748b;
+}
+
+footer p {
+    margin: 5px 0;
 }
