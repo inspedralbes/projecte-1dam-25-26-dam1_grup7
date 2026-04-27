@@ -17,3 +17,7 @@ Llistat d'alguns dels punts que han de quedar explicats en aquesta carpeta. Pode
  * Aplicació Android
  * Altres elements importants.
  * ...
+
+
+Estructura de pantalles :
+https://design.penpot.app/#/view?file-id=ceed1600-61c0-8087-8007-e8664ac101ad&page-id=43c73c51-5517-8066-8007-e867d2f7f933&section=interactions&index=0&share-id=d59e570a-957f-8047-8007-eedf188d8e81
