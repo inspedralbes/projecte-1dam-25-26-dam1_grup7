@@ -1,81 +1,57 @@
-<?php include_once "header.php";?>
-<?php require_once 'connexio.php';?>
+<?php include_once "header.php"; ?>
+<?php require_once 'connexio.php'; ?>
+
 <body>
-    <h1>Crear una Incidencia</h1>
-    <?php
-
-    //farem un select de la taula departaments i recuperarem una matriu de dades
-
-    // Consulta SQL per obtenir totes les files de la taula 'cases'
-    $sql = "SELECT * FROM incidencia";
-    $result = $conn->query($sql);
-
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Si el formulari s'ha enviatc (mètode POST), cridem a la funció per crear la casa
-        crear_incidencia($conn);
-    } else {
-        //Mostrem el formulari per crear una nova casa
-        //Tanquem el php per poder escriure el codi HTML de forma més còmoda.
-        ?>
-        <form method="POST" action="veure_incidencia.php">
-            <fieldset>
-                <legend>Incidencia</legend>
-                 
-                <table>
-                    <tr>
-                        <th>
-                            ID
-                        </th>
-                        <th>
-                            Data Inici
-                        </th>
-                        <th>
-                            Prioritat
-                        </th>
-                        <th>
-                            Descripció
-                        </th>
-                        <th>
-                            Data Fi
-                        </th>
-                        <th>
-                            Tecnic Assignat
-                        </th>
-                        <th>
-                            Departament
-                        </th>
-                        <th>
-                            Tipologia
-                        </th>
-                    </tr>
-                    <?php
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr>";
-                        echo "<td>" . $row["id"] . "</td>";
-                        echo "<td>" . $row["dataInici"] . "</td>";
-                        echo "<td>" . $row["prioritat"] . "</td>";
-                        echo "<td>" . $row["descripcio"] . "</td>";
-                        echo "<td>" . $row["dataFi"] . "</td>";
-                        echo "<td>" . $row["tecnic"] . "</td>";
-                        echo "<td>" . $row["departament"] . "</td>";
-                        echo "<td>" . $row["tipologia"] . "</td>";
-                        //echo "  <option value=" . $row["idDept"] . ">" . $row["nom"] . "</option>" ;
-                        echo "</tr>";
-                        }
-                    ?>
-
-
-                </table>
-            </fieldset>
-        </form>
-
-
+    <h1>Consultar Incidencia</h1>
+    <?php $sql = "SELECT * FROM incidencia";
+    $result = $conn->query($sql); ?>
+    <table>
+        <tr style="border: 1px solid black;">
+            <th style="border: 1px solid black;">
+                ID
+            </th>
+            <th style="border: 1px solid black;">
+                Data Inici
+            </th>
+            <th style="border: 1px solid black;">
+                Prioritat
+            </th>
+            <th style="border: 1px solid black;">
+                Descripció
+            </th>
+            <th style="border: 1px solid black;">
+                Data Fi
+            </th>
+            <th style="border: 1px solid black;">
+                Tecnic Assignat
+            </th>
+            <th style="border: 1px solid black;">
+                Departament
+            </th>
+            <th style="border: 1px solid black;">
+                Tipologia
+            </th>
+            <th>
+                Actuacións
+            </th>
+        </tr>
         <?php
-        //Tanquem l'else
-    }
-    ?>
+       while ($row = $result->fetch_assoc()) {
+        echo "<tr style='border: 1px solid black;'>";
+        echo "<td style='border: 1px solid black;'>" . $row["id"] . "</td>";
+        echo "<td style='border: 1px solid black;'>" . $row["dataInici"] . "</td>";
+        echo "<td style='border: 1px solid black;'>" . $row["prioritat"] . "</td>";
+        echo "<td style='border: 1px solid black;'>" . $row["descripcio"] . "</td>";
+        echo "<td style='border: 1px solid black;'>" . $row["dataFi"] . "</td>";
+        echo "<td style='border: 1px solid black;'>" . $row["tecnic"] . "</td>";
+        echo "<td style='border: 1px solid black;'>" . $row["departament"] . "</td>";
+        echo "<td style='border: 1px solid black;'>" . $row["tipologia"] . "</td>";
+        echo ""
+        echo "</tr>";
+        }
+        <input type="button">
+        ?>
+    </table>
+    </form>
 </body>
-
 </html>
-
