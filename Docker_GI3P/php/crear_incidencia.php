@@ -1,3 +1,4 @@
+<?php include_once "header.php";?>
 <?php
 
 //Sempre volem tenir una connexió a la base de dades, així que la creem al principi del fitxer
@@ -98,12 +99,6 @@ function crear_incidencia($conn)
         //Tanquem l'else
     }
     ?>
-    <div id="menu">
-        <hr>
-        <p><a href="index.php">Portada</a> </p>
-        <p><a href="llistar.php">Llistar</a></p>
-        <p><a href="crear_incidencia.php">Crear</a></p>
-    </div>
 </body>
 
 </html>
