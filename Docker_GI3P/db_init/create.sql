@@ -71,3 +71,15 @@ CREATE TABLE `actuacions` (
   CONSTRAINT `fk_act_incidencia` FOREIGN KEY (`incidencia`) REFERENCES `incidencia` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
+INSERT INTO `departament` (`idDept`, `nom`) VALUES
+(1,	'Català'),
+(2,	'Castellà'),
+(3,	'Anglés'),
+(4,	'Matemàtiques'),
+(5,	'Història'),
+(6,	'Informàtica');
+
+INSERT INTO `tecnic` (`idTecnic`, `nom`) VALUES
+(1,	'Pere'),
+(2,	'Toni'),
+(3,	'Pau');
