@@ -47,7 +47,7 @@ CREATE TABLE `tipologia` (
 
 CREATE TABLE `incidencia` (
   `id` int(9) NOT NULL AUTO_INCREMENT,
-  `dataInici` date NOT NULL,
+  `dataInici` timestamp NOT NULL,
   `prioritat` enum('Baix','Mitjà','Alt') NOT NULL,
   `descripcio` varchar(255) NOT NULL,
   `dataFi` date DEFAULT NULL,
