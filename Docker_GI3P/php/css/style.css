@@ -160,6 +160,12 @@ input[type="button"]:hover {
 #tech-btn { background-color: var(--t-primary-color); }
 #admin-btn { background-color: var(--a-primary-color); }
 
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+
 footer {
     padding: 20px;
     text-align: center;

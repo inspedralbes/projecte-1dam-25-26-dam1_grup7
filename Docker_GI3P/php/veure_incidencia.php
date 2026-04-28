@@ -1,61 +1,5 @@
 <?php include_once "header.php";?>
-<?php
-
-//Sempre volem tenir una connexió a la base de dades, així que la creem al principi del fitxer
-require_once 'connexio.php';
-// Un cop inclòs el fitxer connexio.php, ja podeu utilitzar la variable $conn per a fer les consultes a la base de dades.
-
-/**
- * Funció que llegeix els paràmetres del formulari i crea una nova casa a la base de dades.
- * @param mixed $conn
- * @return void
- */
-function veure_incidencia($conn)
-{
-    // Obtenir el nom de la casa del formulari
-    $departament = $_POST['dep'];
-
-    $descripcio = $_POST['desc'];
-
-  
-    if (empty($departament)) {
-        echo "<p class='error'>El Departament no pot estar buit.</p>";
-        return;
-    }
-  
-    if (empty($descripcio)) {
-        echo "<p class='error'>La Descripció no pot estar buida.</p>";
-        return;
-    }
-
-    // Preparar la consulta SQL per inserir una nova casa
-    $sql = "INSERT INTO incidencia (departament,descripcio,dataInici) VALUES (?,?, NOW())";
-    $stmt = $conn->prepare($sql);  //La variable $conn la tenim per haver inclòs el fitxer connexio.php
-    $stmt->bind_param("is", $departament,  $descripcio);
-
-    // Executar la consulta i comprovar si s'ha inserit correctament
-    if ($stmt->execute()) {
-        echo "<p class='info'>Incidencia creada amb èxit!</p>";
-    } else {
-        echo "<p class='error'>Error al crear l'incidencia: " . htmlspecialchars($stmt->error) . "</p>";
-    }
-
-    // Tancar la declaració i la connexió
-    $stmt->close();
-
-}
-
-
-?>
-<!DOCTYPE html>
-<html lang="ca">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear</title>
-</head>
-
+<?php require_once 'connexio.php';?>
 <body>
     <h1>Crear una Incidencia</h1>
     <?php
@@ -74,13 +18,9 @@ function veure_incidencia($conn)
         //Mostrem el formulari per crear una nova casa
         //Tanquem el php per poder escriure el codi HTML de forma més còmoda.
         ?>
-        <form method="POST" action="crear_incidencia.php">
+        <form method="POST" action="veure_incidencia.php">
             <fieldset>
                 <legend>Incidencia</legend>
-              
-                <label for="departament">Nom de departament:</label>
-
-                <select name="dep" id="departamen">
                  
                 <table>
                     <tr>
@@ -91,16 +31,35 @@ function veure_incidencia($conn)
                             Data Inici
                         </th>
                         <th>
+                            Prioritat
+                        </th>
+                        <th>
                             Descripció
                         </th>
                         <th>
+                            Data Fi
+                        </th>
+                        <th>
+                            Tecnic Assignat
+                        </th>
+                        <th>
                             Departament
+                        </th>
+                        <th>
+                            Tipologia
                         </th>
                     </tr>
                     <?php
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>";
                         echo "<td>" . $row["id"] . "</td>";
+                        echo "<td>" . $row["dataInici"] . "</td>";
+                        echo "<td>" . $row["prioritat"] . "</td>";
+                        echo "<td>" . $row["descripcio"] . "</td>";
+                        echo "<td>" . $row["dataFi"] . "</td>";
+                        echo "<td>" . $row["tecnic"] . "</td>";
+                        echo "<td>" . $row["departament"] . "</td>";
+                        echo "<td>" . $row["tipologia"] . "</td>";
                         //echo "  <option value=" . $row["idDept"] . ">" . $row["nom"] . "</option>" ;
                         echo "</tr>";
                         }
@@ -108,10 +67,6 @@ function veure_incidencia($conn)
 
 
                 </table>
-                </select>
-
-                <input type="textarea" id="desc" name="desc">
-                <input type="submit" value="Crear">
             </fieldset>
         </form>
 
