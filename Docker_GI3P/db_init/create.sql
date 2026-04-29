@@ -82,4 +82,26 @@ INSERT INTO `departament` (`idDept`, `nom`) VALUES
 INSERT INTO `tecnic` (`idTecnic`, `nom`) VALUES
 (1,	'Pere'),
 (2,	'Toni'),
-(3,	'Pau');
+(3,	'Pau'),
+(4,	'Maria'),
+(5,	'Ermengol'),
+(6,	'Victoria');
+
+INSERT INTO `tipologia` (`idTipo`, `nom`) VALUES
+(1,	'Xarxa'),
+(2,	'Hardware'),
+(3,	'Software'),
+(4,	'Seguretat'),
+(5,	'Sistema Operatiu');
+
+INSERT INTO `incidencia` (`id`, `dataInici`, `prioritat`, `descripcio`, `dataFi`, `tecnic`, `departament`, `tipologia`) VALUES
+(1,	'2026-04-29 09:39:09',	'Alt',	'Cable de Xarxa no funciona al ordinador D8.',	NULL,	6,	6,	1),
+(2,	'2026-04-29 09:41:51',	'Mitjà',	'Projector no encén',	NULL,	4,	4,	2),
+(3,	'2026-04-29 09:42:41',	'Baix',	'El ordenador no detecta els altaveus quan els connect a la torre.',	NULL,	5,	3,	2),
+(4,	'2026-04-29 09:43:36',	'Baix',	'No puc descàrregar un programa per mostrar als alumnes la història de Roma.',	NULL,	2,	5,	3);
+
+INSERT INTO `actuacions` (`idActuacio`, `dataActuacio`, `descActuacio`, `visible`, `temps`, `incidencia`) VALUES
+(1,	'2026-04-29',	'He canviat el cable de xarxa.',	0,	5,	1),
+(2,	'2026-04-29',	'He comprovat a corrent i si funciona. Demà miraré el Hardware.',	1,	10,	2),
+(3,	'2026-04-30',	'He comprovat el Hardware i la font d\'almentació no funciona. Ja l\'he canviada.',	1,	20,	2),
+(4,	'2026-05-02',	'El connector no funcionava. Ja està canviat.',	1,	15,	3);

@@ -73,7 +73,7 @@
         echo "<td style='border: 1px solid black;'>" . $row["tipologia"] . "</td>";
         echo "<td style='border: 1px solid black;'>";
         echo "<a href= "."/modificar_incidencia.php?id=" . $row["id"] . ">";
-        echo "<button>"."Modificar". "</button>";
+        echo "<button>"."Assignar". "</button>";
         echo "</td>";
         echo "</tr>";
         }
