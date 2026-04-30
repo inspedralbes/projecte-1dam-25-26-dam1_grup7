@@ -66,43 +66,17 @@ if (isset($_GET['id'])) {
         ?>
     </table>
     <hr>
-    <?php $sql = "SELECT * FROM actuacions where incidencia = $id_incidencia ORDER BY dataActuacio ";
-    $result = $conn->query($sql); ?>
+    <h4>Crear nova actuació</h4>
 
-     <table>
-        <tr style="border: 1px solid black;">
-            <th style="border: 1px solid black;">
-                ID Actuacio
-            </th>
-            <th style="border: 1px solid black;">
-                Data Actuacio
-            </th>
-            <th style="border: 1px solid black;">
-                Descripció
-            </th>
-            <th style="border: 1px solid black;">
-                Visible
-            </th>
-            <th style="border: 1px solid black;">
-                Temps total
-            </th>
-            <th style="border: 1px solid black;">
-                ID
-            </th>
-        </tr>
-        <?php
-       while ($row = $result->fetch_assoc()) {
-        echo "<tr style='border: 1px solid black;'>";
-        echo "<td style='border: 1px solid black;'>" . $row["idActuacio"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["dataActuacio"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["descActuacio"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["visible"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["temps"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["incidencia"] . "</td>";
-        echo "</tr>";
-        }
-        ?>
-    </table>
+
+
+
+
+
+
+
+
+
 
 
 

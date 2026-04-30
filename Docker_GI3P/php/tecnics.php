@@ -6,7 +6,7 @@
     </header>
     <main>
         <div class="menu">
-            <a href="crear_actuacio.php"><input type="button" class="btn-crear-actu" value="Crear Actuació"></a>
+            <a href="actuacio_tecnic.php"><input type="button" class="btn-crear-actu" value="Crear Actuació"></a>
             <a href="consum_departaments.php"><input type="button" class="btn-consultar-dep" value="Consum Departaments"></a>
         </div>
     </main>
