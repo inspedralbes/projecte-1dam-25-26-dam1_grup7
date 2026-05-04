@@ -1,5 +1,5 @@
-<?php include_once "header.php"; ?>
-<?php require_once 'connexio.php'; ?>
+<?php include_once "../globals/header.php"; ?>
+<?php require_once '../globals/connexio.php'; ?>
 
 <?php
 
@@ -75,14 +75,15 @@ function crear_incidencia($conn)
     <title>Crear</title>
 </head>
 <header>
-        <a href="javascript:history.back()" class="btn-back">
-            <span class="arrow">←</span> Tornar
-        </a>
-        <h1>Seleccionar incidència</h1>
-    </header>
-    <hr>
+    <a href="javascript:history.back()" class="btn-back">
+        <span class="arrow">←</span> Tornar
+    </a>
+    <h1>Seleccionar incidència</h1>
+</header>
+<hr>
+
 <body>
-    
+
     <?php
 
     //farem un select de la taula departaments i recuperarem una matriu de dades
@@ -108,5 +109,6 @@ function crear_incidencia($conn)
     }
     ?>
 </body>
-<?php include_once "footer.php";?>
+<?php include_once "../globals/footer.php";?>
+
 </html>
