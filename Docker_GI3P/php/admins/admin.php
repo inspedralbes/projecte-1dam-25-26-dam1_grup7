@@ -10,10 +10,11 @@
         <hr>
     <main>
         <div class="menu">
-            <!-- Asumiendo que informacio_tecnics y estadistiques_acces están o estarán en admins/ -->
             <a href="informacio_tecnics.php"><input type="button" class="btn-inf-tecn" value="Informació de Tècnics"></a>
             <a href="assignar_incidencia.php"><input type="button" class="btn-assign-inc" value="Assignar Incidències"></a>
             <a href="estadistiques_acces.php"><input type="button" class="btn-est-accs" value="Estadistiques d'Accés"></a>
+            <a href="veure_incidencia_admin.php"><input type="button" class="btn-inc-admin" value="Incidencies Admin"></a>
+        </div>
         </div>
     </main>
 </body>

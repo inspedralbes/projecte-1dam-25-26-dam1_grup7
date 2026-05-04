@@ -61,13 +61,10 @@
             <th style="border: 1px solid black;">
                 Tipologia
             </th>
-            <th style="border: 1px solid black;">
-                Modificar
-            </th>
         </tr>
         <?php
        while ($row = $result->fetch_assoc()) {
-        echo "<tr style='border: 1px solid black;'>";
+        echo "<tr onclick=\"window.location='modificar_incidencia.php?id=" . $row["id"] . "';\" style='cursor: pointer;'>";
         echo "<td style='border: 1px solid black;'>" . $row["id"] . "</td>";
         echo "<td style='border: 1px solid black;'>" . $row["dataInici"] . "</td>";
         echo "<td style='border: 1px solid black;'>" . $row["prioritat"] . "</td>";
@@ -76,9 +73,6 @@
         echo "<td style='border: 1px solid black;'>" . $row["tecnic"] . "</td>";
         echo "<td style='border: 1px solid black;'>" . $row["departament"] . "</td>";
         echo "<td style='border: 1px solid black;'>" . $row["tipologia"] . "</td>";
-        echo "<td style='border: 1px solid black;'>";
-        echo "<a href= " . "modificar_incidencia.php?id=" . $row["id"] . ">";
-        echo "<button>"."Assignar". "</button>";
         echo "</td>";
         echo "</tr>";
         }

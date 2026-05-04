@@ -22,7 +22,8 @@
     --admin-bg: #fff1f2;        
     --admin-main: #be123c;      
     --admin-secondary: #fb7185; 
-    --admin-3: #fda4af;         
+    --admin-3: #fda4af;
+    --admin-4: #ff465b;         
     --admin-text: #4c0519;     
 }
 
@@ -96,6 +97,11 @@ body.page-admin .btn-inf-tecn {
 
 body.page-admin .btn-est-accs { 
     background-color: var(--admin-3); 
+    color: var(--admin-text); 
+}
+
+body.page-admin .btn-inc-admin{ 
+    background-color: var(--admin-4); 
     color: var(--admin-text); 
 }
 
@@ -233,3 +239,19 @@ footer p {
 .btn-back:hover .arrow {
     transform: translateX(-4px); 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -9,7 +9,7 @@
     </header>
         <hr>
 
-<body class="page-users">
+<body class="page-admin">
     
     <?php $sql = "SELECT * FROM incidencia";
     $result = $conn->query($sql); ?>
@@ -42,7 +42,7 @@
         </tr>
         <?php
        while ($row = $result->fetch_assoc()) {
-        echo "<tr onclick=\"window.location='veure_actuacions.php?id=" . $row["id"] . "';\" style='cursor: pointer;'>";
+        echo "<tr onclick=\"window.location='veure_actuacions_admin.php?id=" . $row["id"] . "';\" style='cursor: pointer;'>";
         echo "<td style='border: 1px solid black;'>" . $row["id"] . "</td>";
         echo "<td style='border: 1px solid black;'>" . $row["dataInici"] . "</td>";
         echo "<td style='border: 1px solid black;'>" . $row["prioritat"] . "</td>";
