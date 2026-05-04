@@ -8,8 +8,14 @@ if (isset($_GET['id'])) {
 }
     ?>
 
-<body>
-    <h1>Actuacions</h1>
+<body class="page-users">
+    <header>
+        <a href="javascript:history.back()" class="btn-back">
+            <span class="arrow">←</span> Tornar
+        </a>
+        <h1>Actuacions</h1>
+    </header>
+
     <?php $sql = "SELECT * FROM incidencia where id = $id_incidencia";
     $result = $conn->query($sql);
 
@@ -105,10 +111,6 @@ if (isset($_GET['id'])) {
         }
         ?>
     </table>
-
-
-
-
-
 </body>
+<?php include_once "footer.php";?>
 </html>

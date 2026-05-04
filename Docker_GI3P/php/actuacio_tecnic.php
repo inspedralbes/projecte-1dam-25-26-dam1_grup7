@@ -10,15 +10,11 @@ if (isset($_GET['id'])) {
 
 
 <?php
-
 /**
  * Funció que llegeix els paràmetres del formulari i crea una nova casa a la base de dades.
  * @param mixed $conn
  * @return void
  */
-
-
-
 function crear_incidencia($conn)
 {
     $id_tecnic = $conn->real_escape_string($_POST['tecnic']);
@@ -69,18 +65,6 @@ function crear_incidencia($conn)
         echo "<p>No s'han trobat incidències per a aquest tècnic.</p>";
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="ca">
@@ -90,9 +74,14 @@ function crear_incidencia($conn)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear</title>
 </head>
-
+<header>
+        <a href="javascript:history.back()" class="btn-back">
+            <span class="arrow">←</span> Tornar
+        </a>
+        <h1>Seleccionar incidència</h1>
+    </header>
 <body>
-    <h1>Crear Actuacions</h1>
+    
     <?php
 
     //farem un select de la taula departaments i recuperarem una matriu de dades
@@ -118,5 +107,5 @@ function crear_incidencia($conn)
     }
     ?>
 </body>
-
+<?php include_once "footer.php";?>
 </html>

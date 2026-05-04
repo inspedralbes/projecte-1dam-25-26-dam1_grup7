@@ -1,7 +1,13 @@
 <?php include_once "header.php";?>
 <?php require_once 'connexio.php';?>
-<body>
-    <h1>Assignar una Incidencia</h1>
+<html>
+<header>
+    <a href="javascript:history.back()" class="btn-back">
+            <span class="arrow">←</span> Tornar
+        </a>
+        <h1>Assignar una Incidencia</h1>
+</header>
+<body class="page-admin">
     <?php
 
     //farem un select de la taula departaments i recuperarem una matriu de dades
@@ -27,7 +33,6 @@
     }
 
         ?>
-        <h1>Consultar Incidencia</h1>
     <?php $sql = "SELECT * FROM incidencia";
     $result = $conn->query($sql); ?>
     <table>
@@ -80,6 +85,6 @@
     ?>
     </table>
 </body>
-
+<?php include_once "footer.php";?>
 </html>
 

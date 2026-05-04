@@ -49,15 +49,20 @@ function crear_incidencia($conn)
 ?>
 <!DOCTYPE html>
 <html lang="ca">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear</title>
 </head>
 
+<header>
+    <a href="javascript:history.back()" class="btn-back">
+            <span class="arrow">←</span> Tornar
+        </a>
+    <h1>Crear una Incidència</h1>
+</header>
+
 <body class="page-users">
-    <h1>Crear una Incidencia</h1>
     <?php
 
     //farem un select de la taula departaments i recuperarem una matriu de dades
@@ -100,6 +105,6 @@ function crear_incidencia($conn)
     }
     ?>
 </body>
-
+<?php include_once "footer.php";?>
 </html>
 

@@ -1,8 +1,14 @@
 <?php include_once "header.php"; ?>
 <?php require_once 'connexio.php'; ?>
 
-<body>
-    <h1>Consultar Incidencia</h1>
+<header>
+        <a href="javascript:history.back()" class="btn-back">
+            <span class="arrow">←</span> Tornar
+        </a>
+        <h1>Veure Incidències</h1>
+    </header>
+<body class="page-users">
+    
     <?php $sql = "SELECT * FROM incidencia";
     $result = $conn->query($sql); ?>
     <table>
@@ -58,4 +64,5 @@
     }
     ?>
 </body>
+<?php include_once "footer.php";?>
 </html>

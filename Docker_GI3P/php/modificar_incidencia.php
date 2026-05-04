@@ -5,10 +5,15 @@ if (isset($_GET['id'])){
     $id_incidencia = $_GET['id'];
 }
 ?>
-    
+<html>
+<header>
+    <a href="javascript:history.back()" class="btn-back">
+            <span class="arrow">←</span> Tornar
+        </a>
+        <h1>Modificar Incidencia</h1>
+</header>
 
-<body>
-    <h1>Assignar una Incidencia</h1>
+<body class="page-admin">
     <?php
     function modificar_incidencia($conn, $id_incidencia)
     {
@@ -27,9 +32,6 @@ if (isset($_GET['id'])){
         }
     }
         ?>
-
-
-        <h1>Consultar Incidencia</h1>
     <?php $sql = "SELECT * FROM incidencia WHERE id = $id_incidencia";
     $result = $conn->query($sql); 
     $sqlTech = "SELECT * FROM tecnic";
@@ -111,11 +113,10 @@ if (isset($_GET['id'])){
 
     <input type="submit" value="Guardar">
 </form>
-
 <?php 
     }
     ?>
 </body>
-
+<?php include_once "footer.php";?>
 </html>
 

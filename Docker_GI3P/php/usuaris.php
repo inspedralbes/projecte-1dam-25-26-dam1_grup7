@@ -1,6 +1,10 @@
 <?php include_once "header.php";?>
+<html>
 <body class="page-users">
     <header>
+        <a href="javascript:history.back()" class="btn-back">
+            <span class="arrow">←</span> Tornar
+        </a>
         <h1>Gestor d'incidències per a Usuaris</h1>
     </header>
     <main>
@@ -11,3 +15,5 @@
         </div>
     </main>
 </body>
+<?php include_once "footer.php";?>
+</html>

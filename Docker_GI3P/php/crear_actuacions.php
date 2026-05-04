@@ -8,8 +8,14 @@ if (isset($_GET['id'])) {
 }
 ?>
 
+<header>
+        <a href="javascript:history.back()" class="btn-back">
+            <span class="arrow">←</span> Tornar
+        </a>
+        <h1>Crear Actuació</h1>
+</header>
+
 <body>
-    <h1>Actuacions</h1>
     <?php $sql = "SELECT * FROM incidencia where id = $id_incidencia";
     $result = $conn->query($sql);
 
@@ -68,20 +74,13 @@ if (isset($_GET['id'])) {
     <hr>
     <h4>Crear nova actuació</h4>
 
-
-
-
     <?php
-
     function crear_actuacions($conn, $id_incidencia)
     {
         // Obtenir el nom de la casa del formulari
         $temps = $_POST['temps'];
-
         $descripcio = $_POST['desc'];
-
         $visible = $_POST['visible'];
-
         $finalitzat = $_POST['final'];
 
         if (empty($temps)) {
@@ -93,8 +92,6 @@ if (isset($_GET['id'])) {
             echo "<p class='error'>La Descripció no pot estar buida.</p>";
             return;
         }
-
-
 
         // Preparar la consulta SQL per inserir una nova casa
         $sql = "INSERT INTO actuacions (dataActuacio, descActuacio, visible, temps, incidencia) VALUES (NOW(), ?, ?, ?, ?)";
@@ -114,16 +111,13 @@ if (isset($_GET['id'])) {
             $stmt->bind_param("i", $id_incidencia);
             $stmt->execute();
         }
-
         // Tancar la declaració i la connexió
         $stmt->close();
 
     }
 
-
     $sql = "SELECT * FROM departament";
     $result = $conn->query($sql);
-
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Si el formulari s'ha enviatc (mètode POST), cridem a la funció per crear la casa
@@ -155,8 +149,6 @@ if (isset($_GET['id'])) {
         <?php
     }
     ?>
-
-
     <?php $sql = "SELECT * FROM actuacions where incidencia = $id_incidencia ORDER BY dataActuacio ";
     $result = $conn->query($sql); ?>
 
@@ -195,13 +187,6 @@ if (isset($_GET['id'])) {
         }
         ?>
     </table>
-
-
-
-
-
-
-
 </body>
-
+<?php include_once "footer.php";?>
 </html>

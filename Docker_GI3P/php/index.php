@@ -13,12 +13,6 @@
         <a href="admin.php"><input id="admin-btn" type="button" value="Administradors"></a>
     </div>
     </main>
-    <hr>
-<footer>
-    <p>Projecte Final</p>
-    <p>Unai Álvarez | Sergi Cantallops</p>
-</footer>
-
 </body>
-
+<?php include_once "footer.php";?>
 </html>
