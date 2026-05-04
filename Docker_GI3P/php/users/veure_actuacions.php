@@ -1,5 +1,5 @@
-<?php include_once "header.php"; ?>
-<?php require_once 'connexio.php'; ?>
+<?php include_once "../globals/header.php"; ?>
+<?php require_once '../globals/connexio.php'; ?>
 
 <?php
 
@@ -114,5 +114,5 @@ if (isset($_GET['id'])) {
         ?>
     </table>
 </body>
-<?php include_once "footer.php";?>
+<?php include_once "../globals/footer.php";?>
 </html>

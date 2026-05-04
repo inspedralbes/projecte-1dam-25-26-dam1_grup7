@@ -1,8 +1,8 @@
-<?php include_once "header.php";?>
+<?php include_once "../globals/header.php";?>
 <?php
 
 //Sempre volem tenir una connexió a la base de dades, així que la creem al principi del fitxer
-require_once 'connexio.php';
+require_once '../globals/connexio.php';
 // Un cop inclòs el fitxer connexio.php, ja podeu utilitzar la variable $conn per a fer les consultes a la base de dades.
 
 /**
@@ -106,6 +106,5 @@ function crear_incidencia($conn)
     }
     ?>
 </body>
-<?php include_once "footer.php";?>
+<?php include_once "../globals/footer.php";?>
 </html>
-

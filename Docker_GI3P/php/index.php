@@ -1,4 +1,4 @@
-<?php include_once "header.php";?>
+<?php include_once "globals/header.php";?>
 
 <body>
     <header>
@@ -8,11 +8,11 @@
     <main>
         <div class="menu">
         
-        <a href="usuaris.php"><input id="user-btn" type="button" value="Usuaris"></a>
-        <a href="tecnics.php"><input id="tech-btn" type="button" value="Tècnics"></a>
-        <a href="admin.php"><input id="admin-btn" type="button" value="Administradors"></a>
+        <a href="users/usuaris.php"><input id="user-btn" type="button" value="Usuaris"></a>
+        <a href="tecnics/tecnics.php"><input id="tech-btn" type="button" value="Tècnics"></a>
+        <a href="admins/admin.php"><input id="admin-btn" type="button" value="Administradors"></a>
     </div>
     </main>
 </body>
-<?php include_once "footer.php";?>
+<?php include_once "globals/footer.php";?>
 </html>

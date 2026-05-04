@@ -1,5 +1,5 @@
-<?php include_once "header.php"; ?>
-<?php require_once 'connexio.php'; ?>
+<?php include_once "../globals/header.php"; ?>
+<?php require_once '../globals/connexio.php'; ?>
 
 <header>
         <a href="javascript:history.back()" class="btn-back">
@@ -66,5 +66,5 @@
     }
     ?>
 </body>
-<?php include_once "footer.php";?>
+<?php include_once "../globals/footer.php";?>
 </html>

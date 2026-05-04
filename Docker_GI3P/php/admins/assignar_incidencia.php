@@ -1,5 +1,5 @@
-<?php include_once "header.php";?>
-<?php require_once 'connexio.php';?>
+<?php include_once "../globals/header.php";?>
+<?php require_once '../globals/connexio.php';?>
 <html>
 <header>
     <a href="javascript:history.back()" class="btn-back">
@@ -77,7 +77,7 @@
         echo "<td style='border: 1px solid black;'>" . $row["departament"] . "</td>";
         echo "<td style='border: 1px solid black;'>" . $row["tipologia"] . "</td>";
         echo "<td style='border: 1px solid black;'>";
-        echo "<a href= "."/modificar_incidencia.php?id=" . $row["id"] . ">";
+        echo "<a href= " . "modificar_incidencia.php?id=" . $row["id"] . ">";
         echo "<button>"."Assignar". "</button>";
         echo "</td>";
         echo "</tr>";
@@ -85,6 +85,5 @@
     ?>
     </table>
 </body>
-<?php include_once "footer.php";?>
+<?php include_once "../globals/footer.php";?>
 </html>
-
