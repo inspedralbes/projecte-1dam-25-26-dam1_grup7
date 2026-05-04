@@ -7,6 +7,8 @@
         </a>
         <h1>Gestor d'incidències per a Usuaris</h1>
     </header>
+        <hr>
+
     <main>
         <div class="menu">
             <a href="crear_incidencia.php"><input type="button" class="btn-crear" value="Crear Incidències"></a>

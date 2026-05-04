@@ -7,6 +7,8 @@
         </a>
         <h1>Veure Incidències</h1>
     </header>
+        <hr>
+
 <body class="page-users">
     
     <?php $sql = "SELECT * FROM incidencia";

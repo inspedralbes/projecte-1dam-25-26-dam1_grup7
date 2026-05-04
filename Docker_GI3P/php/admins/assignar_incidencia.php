@@ -7,6 +7,8 @@
         </a>
         <h1>Assignar una Incidencia</h1>
 </header>
+    <hr>
+
 <body class="page-admin">
     <?php
 

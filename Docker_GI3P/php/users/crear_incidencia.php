@@ -61,6 +61,7 @@ function crear_incidencia($conn)
         </a>
     <h1>Crear una Incidència</h1>
 </header>
+    <hr>
 
 <body class="page-users">
     <?php

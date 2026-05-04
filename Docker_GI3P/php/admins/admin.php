@@ -7,6 +7,7 @@
         </a>
         <h1>Gestor d'incidències per a Administradors</h1>
     </header>
+        <hr>
     <main>
         <div class="menu">
             <a href="informacio_tecnics.php"><input type="button" class="btn-inf-tecn" value="Informació de Tècnics"></a>

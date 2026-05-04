@@ -6,6 +6,8 @@
         </a>
         <h1>Gestor d'incidències per a Tecnics</h1>
 </header>
+    <hr>
+
 <body class="page-tecnics">
     <main>
         <div class="menu">

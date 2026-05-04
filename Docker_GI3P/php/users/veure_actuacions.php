@@ -15,6 +15,8 @@ if (isset($_GET['id'])) {
         </a>
         <h1>Actuacions</h1>
     </header>
+        <hr>
+
 
     <?php $sql = "SELECT * FROM incidencia where id = $id_incidencia";
     $result = $conn->query($sql);

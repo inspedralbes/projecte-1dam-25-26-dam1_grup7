@@ -80,6 +80,7 @@ function crear_incidencia($conn)
         </a>
         <h1>Seleccionar incidència</h1>
     </header>
+    <hr>
 <body>
     
     <?php

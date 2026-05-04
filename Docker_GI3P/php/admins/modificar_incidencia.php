@@ -12,6 +12,7 @@ if (isset($_GET['id'])){
         </a>
         <h1>Modificar Incidencia</h1>
 </header>
+    <hr>
 
 <body class="page-admin">
     <?php
