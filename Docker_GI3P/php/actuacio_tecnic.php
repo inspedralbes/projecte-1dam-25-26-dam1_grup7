@@ -6,7 +6,7 @@
 if (isset($_GET['id'])) {
     $id_incidencia = $_GET['id'];
 }
-    ?>
+?>
 
 
 <?php
@@ -21,50 +21,57 @@ if (isset($_GET['id'])) {
 
 function crear_incidencia($conn)
 {
-    $id = $_POST['tecnic'];
+    $id_tecnic = $conn->real_escape_string($_POST['tecnic']);
 
-    if (empty($id)) {
+    if (empty($id_tecnic)) {
         echo "<p class='error'>El ID no pot estar buit.</p>";
         return;
     }
-    $sql = "SELECT * FROM incidencia WHERE tecnic = '$id'";
+
+    $sql = "SELECT * FROM incidencia WHERE tecnic = '$id_tecnic' AND dataFI IS NULL";
     $result = $conn->query($sql);
 
-    echo "<h3> Incidencies </h3>";
+    echo "<h3> Incidències </h3>";
     if ($result && $result->num_rows > 0) {
-        echo "<table style='border-collapse: collapse; width: 100%;'>";
-        echo "<tr style='border: 1px solid black; background-color: #f2f2f2;'>";
-        echo "<th style='border: 1px solid black;'>ID</th>";
-        echo "<th style='border: 1px solid black;'>Data Inici</th>";
-        echo "<th style='border: 1px solid black;'>Prioritat</th>";
-        echo "<th style='border: 1px solid black;'>Descripció</th>";
-        echo "<th style='border: 1px solid black;'>Data Fi</th>";
-        echo "<th style='border: 1px solid black;'>Tecnic Assignat</th>";
-        echo "<th style='border: 1px solid black;'>Departament</th>";
-        echo "<th style='border: 1px solid black;'>Tipologia</th>";
-        echo "<th style='border: 1px solid black;'>Actuacións</th>";
+        echo "<table style='width: 90%; margin: 20px auto; border-collapse: collapse; border: 1px solid black;'>";
+        echo "<tr style='background-color: #f2f2f2;'>";
+        echo "<th style='border: 1px solid black; padding: 12px 15px; text-align: left;'>ID</th>";
+        echo "<th style='border: 1px solid black; padding: 12px 15px; text-align: left;'>Data Inici</th>";
+        echo "<th style='border: 1px solid black; padding: 12px 15px; text-align: left;'>Prioritat</th>";
+        echo "<th style='border: 1px solid black; padding: 12px 15px; text-align: left;'>Descripció</th>";
+        echo "<th style='border: 1px solid black; padding: 12px 15px; text-align: left;'>Data Fi</th>";
+        echo "<th style='border: 1px solid black; padding: 12px 15px; text-align: left;'>Departament</th>";
+        echo "<th style='border: 1px solid black; padding: 12px 15px; text-align: left;'>Tipologia</th>";
+        echo "<th style='border: 1px solid black; padding: 12px 15px; text-align: left;'>Actuacions</th>";
         echo "</tr>";
 
         while ($row = $result->fetch_assoc()) {
-            echo "<tr style='border: 1px solid black;'>";
-            echo "<td style='border: 1px solid black;'>" . $row["id"] . "</td>";
-            echo "<td style='border: 1px solid black;'>" . $row["dataInici"] . "</td>";
-            echo "<td style='border: 1px solid black;'>" . $row["prioritat"] . "</td>";
-            echo "<td style='border: 1px solid black;'>" . $row["descripcio"] . "</td>";
-            echo "<td style='border: 1px solid black;'>" . $row["dataFi"] . "</td>";
-            echo "<td style='border: 1px solid black;'>" . $row["tecnic"] . "</td>";
-            echo "<td style='border: 1px solid black;'>" . $row["departament"] . "</td>";
-            echo "<td style='border: 1px solid black;'>" . $row["tipologia"] . "</td>";
-            echo "<td style='border: 1px solid black;'>";
-            echo "<a href='crear_actuacions.php?id=" . $row["id"] . "'><button>Incidencies</button></a>"; 
-            echo "</td>";
+            $id_incidencia = $row['id'];
+
+            $cont_sql = "SELECT COUNT(*) as total FROM actuacions WHERE incidencia = $id_incidencia";
+            $res_cont = $conn->query($cont_sql);
+            $row_cont = $res_cont->fetch_assoc();
+            $total_actuacions = $row_cont['total'];
+            echo "<tr onclick=\"window.location='crear_actuacions.php?id=" . $row["id"] . "';\" style='cursor: pointer;'>";
+            echo "<td style='border: 1px solid black; padding: 12px 15px;'>" . $row["id"] . "</td>";
+            echo "<td style='border: 1px solid black; padding: 12px 15px;'>" . $row["dataInici"] . "</td>";
+            echo "<td style='border: 1px solid black; padding: 12px 15px;'>" . $row["prioritat"] . "</td>";
+            echo "<td style='border: 1px solid black; padding: 12px 15px;'>" . $row["descripcio"] . "</td>";
+            echo "<td style='border: 1px solid black; padding: 12px 15px;'>" . $row["dataFi"] . "</td>";
+            echo "<td style='border: 1px solid black; padding: 12px 15px;'>" . $row["departament"] . "</td>";
+            echo "<td style='border: 1px solid black; padding: 12px 15px;'>" . $row["tipologia"] . "</td>";
+            echo "<td style='border: 1px solid black; padding: 12px 15px; text-align: center;'>" . $total_actuacions . "</td>";
             echo "</tr>";
+
         }
         echo "</table>";
     } else {
         echo "<p>No s'han trobat incidències per a aquest tècnic.</p>";
     }
 }
+
+
+
 
 
 
@@ -89,7 +96,7 @@ function crear_incidencia($conn)
     <?php
 
     //farem un select de la taula departaments i recuperarem una matriu de dades
-
+    
     // Consulta SQL per obtenir totes les files de la taula 'cases'
     $sql = "SELECT * FROM departament";
     $result = $conn->query($sql);
@@ -113,4 +120,3 @@ function crear_incidencia($conn)
 </body>
 
 </html>
-
