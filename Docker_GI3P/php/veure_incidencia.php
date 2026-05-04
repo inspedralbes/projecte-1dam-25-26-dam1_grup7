@@ -55,9 +55,7 @@
     </table>
     <?php
     function crear_incidencia($conn) {
-
     }
-
     ?>
 </body>
 </html>
