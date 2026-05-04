@@ -15,8 +15,6 @@
     //farem un select de la taula departaments i recuperarem una matriu de dades
 
     // Consulta SQL per obtenir totes les files de la taula 'cases'
-    $sql = "SELECT * FROM incidencia";
-    $result = $conn->query($sql);
 
     function assignar_incidencia($conn)
     {
@@ -35,7 +33,7 @@
     }
 
         ?>
-    <?php $sql = "SELECT * FROM incidencia";
+    <?php $sql = "SELECT * FROM incidencia where dataFI IS NULL";
     $result = $conn->query($sql); ?>
     <table>
         <tr style="border: 1px solid black;">
