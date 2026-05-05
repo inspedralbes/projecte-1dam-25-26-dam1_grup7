@@ -1,8 +1,8 @@
+<?php ob_start(); ?>
 <?php include_once "../globals/header.php"; ?>
 <?php require_once '../globals/connexio.php'; ?>
 
 <?php
-
 if (isset($_GET['id'])) {
     $id_incidencia = $_GET['id'];
 }
@@ -17,7 +17,8 @@ if (isset($_GET['id'])) {
 <hr>
 
 <body>
-    <?php $sql = "SELECT * FROM incidencia where id = $id_incidencia";
+    <?php 
+    $sql = "SELECT * FROM incidencia where id = $id_incidencia";
     $result = $conn->query($sql);
 
     $cont = "SELECT COUNT(*) as total FROM actuacions WHERE incidencia = $id_incidencia";
@@ -25,39 +26,27 @@ if (isset($_GET['id'])) {
     $row_cont = $res_cont->fetch_assoc();
     $total = $row_cont['total'];
 
+    $incidencia_finalitzada = false;
     ?>
     <table>
         <tr style="border: 1px solid black;">
-            <th style="border: 1px solid black;">
-                ID
-            </th>
-            <th style="border: 1px solid black;">
-                Data Inici
-            </th>
-            <th style="border: 1px solid black;">
-                Prioritat
-            </th>
-            <th style="border: 1px solid black;">
-                Descripció
-            </th>
-            <th style="border: 1px solid black;">
-                Data Fi
-            </th>
-            <th style="border: 1px solid black;">
-                Tecnic Assignat
-            </th>
-            <th style="border: 1px solid black;">
-                Departament
-            </th>
-            <th style="border: 1px solid black;">
-                Tipologia
-            </th>
-            <th style="border: 1px solid black;">
-                Actuacións
-            </th>
+            <th style="border: 1px solid black;">ID</th>
+            <th style="border: 1px solid black;">Data Inici</th>
+            <th style="border: 1px solid black;">Prioritat</th>
+            <th style="border: 1px solid black;">Descripció</th>
+            <th style="border: 1px solid black;">Data Fi</th>
+            <th style="border: 1px solid black;">Tecnic Assignat</th>
+            <th style="border: 1px solid black;">Departament</th>
+            <th style="border: 1px solid black;">Tipologia</th>
+            <th style="border: 1px solid black;">Actuacións</th>
         </tr>
         <?php
         while ($row = $result->fetch_assoc()) {
+            //Si la dataFi no està buida, vol dir que la incidència està finalitzada
+            if (!empty($row["dataFi"])) {
+                $incidencia_finalitzada = true;
+            }
+
             echo "<tr style='border: 1px solid black;'>";
             echo "<td style='border: 1px solid black;'>" . $row["id"] . "</td>";
             echo "<td style='border: 1px solid black;'>" . $row["dataInici"] . "</td>";
@@ -73,12 +62,11 @@ if (isset($_GET['id'])) {
         ?>
     </table>
     <hr>
-    <h4 style="text-align: center;">Crear nova actuació</h4>
 
     <?php
     function crear_actuacions($conn, $id_incidencia)
     {
-        // Obtenir el nom de la casa del formulari
+        // Obtenir dades del formulari
         $temps = $_POST['temps'];
         $descripcio = $_POST['desc'];
         $visible = $_POST['visible'];
@@ -94,44 +82,54 @@ if (isset($_GET['id'])) {
             return;
         }
 
-        // Preparar la consulta SQL per inserir una nova casa
+        // Preparar la consulta SQL per inserir una nova actuació
         $sql = "INSERT INTO actuacions (dataActuacio, descActuacio, visible, temps, incidencia) VALUES (NOW(), ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);  //La variable $conn la tenim per haver inclòs el fitxer connexio.php
+        $stmt = $conn->prepare($sql);  
         $stmt->bind_param("siii", $descripcio, $visible, $temps, $id_incidencia);
 
-        // Executar la consulta i comprovar si s'ha inserit correctament
-        if ($stmt->execute()) {
-            echo "<p class='info'>Actuació creada amb èxit!</p>";
-        } else {
+        // Executar la consulta i comprovar errors
+        if (!$stmt->execute()) {
             echo "<p class='error'>Error al crear l'actuació: " . htmlspecialchars($stmt->error) . "</p>";
         }
 
+        // Si s'ha marcat com a finalitzada, actualitzem la incidència
         if ($finalitzat == "1") {
             $sql = "UPDATE incidencia SET dataFI = NOW() WHERE id = ?";
-            $stmt = $conn->prepare($sql);  //La variable $conn la tenim per haver inclòs el fitxer connexio.php
-            $stmt->bind_param("i", $id_incidencia);
-            $stmt->execute();
+            $stmt_upd = $conn->prepare($sql); 
+            $stmt_upd->bind_param("i", $id_incidencia);
+            $stmt_upd->execute();
+            $stmt_upd->close();
+            
+            //Redirigir a la mateixa pàgina per mostrar el missatge de "Completat"
+            header("Location: " . $_SERVER['PHP_SELF'] . "?id=" . $id_incidencia . "&status=completat");
+            exit();
         }
-        // Tancar la declaració i la connexió
-        $stmt->close();
+        
+        //Redirigir per evitar l'enviament duplicat del formulari
+        header("Location: " . $_SERVER['PHP_SELF'] . "?id=" . $id_incidencia);
+        exit();
 
+        $stmt->close();
     }
 
     $sql = "SELECT * FROM departament";
     $result = $conn->query($sql);
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Si el formulari s'ha enviatc (mètode POST), cridem a la funció per crear la casa
         crear_actuacions($conn, $id_incidencia);
+    }
 
+    // Amagar o mostrar el formulari segons l'estat de la incidència
+    if ($incidencia_finalitzada) {
+        echo "<h2 style='text-align: center;'>Incidència finalitzada</h2>";
     } else {
-        //Mostrem el formulari per crear una nova casa
-        //Tanquem el php per poder escriure el codi HTML de forma més còmoda.
         ?>
         <main>
+            
             <form method="POST" action="crear_actuacions.php?id=<?php echo $id_incidencia; ?>">
                 <fieldset>
-                    <label for="description">Descripció:</label>
+                    <h3 style="text-align: center;">Crear nova actuació</h4>
+                    <label for="desc">Descripció:</label>
                     <input type="text" id="desc" name="desc">
                     <br>
                     <label for="temps">Temps total per l'actuació:</label>
@@ -157,33 +155,23 @@ if (isset($_GET['id'])) {
         <?php
     }
     ?>
-    <?php $sql = "SELECT * FROM actuacions where incidencia = $id_incidencia ORDER BY dataActuacio ";
-    $result = $conn->query($sql); ?>
+    
+    <?php 
+    $sql = "SELECT * FROM actuacions where incidencia = $id_incidencia ORDER BY dataActuacio ";
+    $result = $conn->query($sql); 
+    ?>
 
     <table>
         <tr style="border: 1px solid black;">
-            <th style="border: 1px solid black;">
-                ID Actuacio
-            </th>
-            <th style="border: 1px solid black;">
-                Data Actuacio
-            </th>
-            <th style="border: 1px solid black;">
-                Descripció
-            </th>
-            <th style="border: 1px solid black;">
-                Visible
-            </th>
-            <th style="border: 1px solid black;">
-                Temps total
-            </th>
-            <th style="border: 1px solid black;">
-                ID
-            </th>
+            <th style="border: 1px solid black;">ID Actuacio</th>
+            <th style="border: 1px solid black;">Data Actuacio</th>
+            <th style="border: 1px solid black;">Descripció</th>
+            <th style="border: 1px solid black;">Visible</th>
+            <th style="border: 1px solid black;">Temps total</th>
+            <th style="border: 1px solid black;">ID</th>
         </tr>
         <?php
         while ($row = $result->fetch_assoc()) {
-
             echo "<tr style='border: 1px solid black;'>";
             echo "<td style='border: 1px solid black;'>" . $row["idActuacio"] . "</td>";
             echo "<td style='border: 1px solid black;'>" . $row["dataActuacio"] . "</td>";
@@ -197,5 +185,4 @@ if (isset($_GET['id'])) {
     </table>
 </body>
 <?php include_once "../globals/footer.php"; ?>
-
 </html>
