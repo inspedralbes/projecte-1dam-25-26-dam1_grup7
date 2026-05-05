@@ -2,15 +2,15 @@
 <?php require_once '../globals/connexio.php'; ?>
 
 <header>
-        <a href="admin.php" class="btn-back">
-            <span class="arrow">←</span> Tornar
-        </a>
-        <h1>Veure Incidències</h1>
-    </header>
-        <hr>
+    <a href="admin.php" class="btn-back">
+        <span class="arrow">←</span> Tornar
+    </a>
+    <h1>Veure Incidències</h1>
+</header>
+<hr>
 
 <body class="page-admin">
-    
+
     <?php $sql = "SELECT * FROM incidencia";
     $result = $conn->query($sql); ?>
     <table>
@@ -41,25 +41,36 @@
             </th>
         </tr>
         <?php
-       while ($row = $result->fetch_assoc()) {
-        echo "<tr onclick=\"window.location='veure_actuacions_admin.php?id=" . $row["id"] . "';\" style='cursor: pointer;'>";
-        echo "<td style='border: 1px solid black;'>" . $row["id"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["dataInici"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["prioritat"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["descripcio"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["dataFi"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["tecnic"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["departament"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["tipologia"] . "</td>";
-        echo "</td>";
-        echo "</tr>";
+        while ($row = $result->fetch_assoc()) {
+            if ($row["prioritat"] == "Baix") {
+                $color = "var(--baix-color)"; // Verd clar
+            } elseif ($row["prioritat"] == "Mitja") {
+                $color = "var(--mitja-color)"; // Groc clar
+            } elseif ($row["prioritat"] == "Alt") {
+                $color = "var(--alt-color)"; // Vermell clar
+            } else {
+                $color = "white"; // Color per defecte
+            }
+            echo "<tr onclick=\"window.location='veure_actuacions_admin.php?id=" . $row["id"] . "';\" style='cursor: pointer;'>";
+            echo "<td style='border: 1px solid black;'>" . $row["id"] . "</td>";
+            echo "<td style='border: 1px solid black;'>" . $row["dataInici"] . "</td>";
+            echo "<td style='border: 1px solid black; background-color: $color;'>" . $row["prioritat"] . "</td>";
+            echo "<td style='border: 1px solid black;'>" . $row["descripcio"] . "</td>";
+            echo "<td style='border: 1px solid black;'>" . $row["dataFi"] . "</td>";
+            echo "<td style='border: 1px solid black;'>" . $row["tecnic"] . "</td>";
+            echo "<td style='border: 1px solid black;'>" . $row["departament"] . "</td>";
+            echo "<td style='border: 1px solid black;'>" . $row["tipologia"] . "</td>";
+            echo "</td>";
+            echo "</tr>";
         }
         ?>
     </table>
     <?php
-    function crear_incidencia($conn) {
+    function crear_incidencia($conn)
+    {
     }
     ?>
 </body>
-<?php include_once "../globals/footer.php";?>
+<?php include_once "../globals/footer.php"; ?>
+
 </html>

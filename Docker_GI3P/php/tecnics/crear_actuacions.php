@@ -17,7 +17,7 @@ if (isset($_GET['id'])) {
 <hr>
 
 <body>
-    <?php 
+    <?php
     $sql = "SELECT * FROM incidencia where id = $id_incidencia";
     $result = $conn->query($sql);
 
@@ -46,11 +46,20 @@ if (isset($_GET['id'])) {
             if (!empty($row["dataFi"])) {
                 $incidencia_finalitzada = true;
             }
+            if ($row["prioritat"] == "Baix") {
+                $color = "var(--baix-color)"; // Verd clar
+            } elseif ($row["prioritat"] == "Mitja") {
+                $color = "var(--mitja-color)"; // Groc clar
+            } elseif ($row["prioritat"] == "Alt") {
+                $color = "var(--alt-color)"; // Vermell clar
+            } else {
+                $color = "white"; // Color per defecte
+            }
 
             echo "<tr style='border: 1px solid black;'>";
             echo "<td style='border: 1px solid black;'>" . $row["id"] . "</td>";
             echo "<td style='border: 1px solid black;'>" . $row["dataInici"] . "</td>";
-            echo "<td style='border: 1px solid black;'>" . $row["prioritat"] . "</td>";
+            echo "<td style='border: 1px solid black; background-color: $color;'>" . $row["prioritat"] . "</td>";
             echo "<td style='border: 1px solid black;'>" . $row["descripcio"] . "</td>";
             echo "<td style='border: 1px solid black;'>" . $row["dataFi"] . "</td>";
             echo "<td style='border: 1px solid black;'>" . $row["tecnic"] . "</td>";
@@ -84,7 +93,7 @@ if (isset($_GET['id'])) {
 
         // Preparar la consulta SQL per inserir una nova actuació
         $sql = "INSERT INTO actuacions (dataActuacio, descActuacio, visible, temps, incidencia) VALUES (NOW(), ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);  
+        $stmt = $conn->prepare($sql);
         $stmt->bind_param("siii", $descripcio, $visible, $temps, $id_incidencia);
 
         // Executar la consulta i comprovar errors
@@ -95,16 +104,16 @@ if (isset($_GET['id'])) {
         // Si s'ha marcat com a finalitzada, actualitzem la incidència
         if ($finalitzat == "1") {
             $sql = "UPDATE incidencia SET dataFI = NOW() WHERE id = ?";
-            $stmt_upd = $conn->prepare($sql); 
+            $stmt_upd = $conn->prepare($sql);
             $stmt_upd->bind_param("i", $id_incidencia);
             $stmt_upd->execute();
             $stmt_upd->close();
-            
+
             //Redirigir a la mateixa pàgina per mostrar el missatge de "Completat"
             header("Location: " . $_SERVER['PHP_SELF'] . "?id=" . $id_incidencia . "&status=completat");
             exit();
         }
-        
+
         //Redirigir per evitar l'enviament duplicat del formulari
         header("Location: " . $_SERVER['PHP_SELF'] . "?id=" . $id_incidencia);
         exit();
@@ -125,40 +134,40 @@ if (isset($_GET['id'])) {
     } else {
         ?>
         <main>
-            
+
             <form method="POST" action="crear_actuacions.php?id=<?php echo $id_incidencia; ?>">
                 <fieldset>
                     <h3 style="text-align: center;">Crear nova actuació</h4>
-                    <label for="desc">Descripció:</label>
-                    <input type="text" id="desc" name="desc">
-                    <br>
-                    <label for="temps">Temps total per l'actuació:</label>
-                    <input type="number" id="temps" name="temps">
-                    <br>
-                    <div class="checkbox-group">
-                        <div class="checkbox-item">
-                            <input type="hidden" name="visible" value="0">
-                            <input type="checkbox" id="visible" name="visible" value="1">
-                            <label for="visible">Visible per l'Usuari</label>
-                        </div>
+                        <label for="desc">Descripció:</label>
+                        <input type="text" id="desc" name="desc">
+                        <br>
+                        <label for="temps">Temps total per l'actuació:</label>
+                        <input type="number" id="temps" name="temps">
+                        <br>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="hidden" name="visible" value="0">
+                                <input type="checkbox" id="visible" name="visible" value="1">
+                                <label for="visible">Visible per l'Usuari</label>
+                            </div>
 
-                        <div class="checkbox-item">
-                            <input type="hidden" name="final" value="0">
-                            <input type="checkbox" id="final" name="final" value="1">
-                            <label for="final">Finalitzada</label>
+                            <div class="checkbox-item">
+                                <input type="hidden" name="final" value="0">
+                                <input type="checkbox" id="final" name="final" value="1">
+                                <label for="final">Finalitzada</label>
+                            </div>
                         </div>
-                    </div>
-                    <input type="submit" value="Crear">
+                        <input type="submit" value="Crear">
                 </fieldset>
             </form>
         </main>
         <?php
     }
     ?>
-    
-    <?php 
+
+    <?php
     $sql = "SELECT * FROM actuacions where incidencia = $id_incidencia ORDER BY dataActuacio ";
-    $result = $conn->query($sql); 
+    $result = $conn->query($sql);
     ?>
 
     <table>
@@ -185,4 +194,5 @@ if (isset($_GET['id'])) {
     </table>
 </body>
 <?php include_once "../globals/footer.php"; ?>
+
 </html>

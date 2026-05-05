@@ -1,21 +1,21 @@
-<?php include_once "../globals/header.php";?>
-<?php require_once '../globals/connexio.php';?>
+<?php include_once "../globals/header.php"; ?>
+<?php require_once '../globals/connexio.php'; ?>
 <html>
 <header>
     <a href="admin.php" class="btn-back">
-            <span class="arrow">←</span> Tornar
-        </a>
-        <h1>Assignar una Incidencia</h1>
+        <span class="arrow">←</span> Tornar
+    </a>
+    <h1>Assignar una Incidencia</h1>
 </header>
-    <hr>
+<hr>
 
 <body class="page-admin">
     <?php
 
     //farem un select de la taula departaments i recuperarem una matriu de dades
-
+    
     // Consulta SQL per obtenir totes les files de la taula 'cases'
-
+    
     function assignar_incidencia($conn)
     {
         $tecnic = $_POST['tech'];
@@ -23,16 +23,16 @@
 
         $sql = "INSERT INTO incidencia (id, prioritat, tecnic) VALUES (?,?,?)";
         $stmt = $conn->prepare($sql);  //La variable $conn la tenim per haver inclòs el fitxer connexio.php
-        $stmt->bind_param("ss", $tecnic,  $priotitat);
+        $stmt->bind_param("ss", $tecnic, $priotitat);
 
         if ($stmt->execute()) {
-        echo "<p class='info'>Incidencia assignada amb èxit!</p>";
+            echo "<p class='info'>Incidencia assignada amb èxit!</p>";
         } else {
-        echo "<p class='error'>Error al assignar l'incidencia: " . htmlspecialchars($stmt->error) . "</p>";
+            echo "<p class='error'>Error al assignar l'incidencia: " . htmlspecialchars($stmt->error) . "</p>";
         }
     }
 
-        ?>
+    ?>
     <?php $sql = "SELECT * FROM incidencia where dataFI IS NULL";
     $result = $conn->query($sql); ?>
     <table>
@@ -63,21 +63,31 @@
             </th>
         </tr>
         <?php
-       while ($row = $result->fetch_assoc()) {
-        echo "<tr onclick=\"window.location='modificar_incidencia.php?id=" . $row["id"] . "';\" style='cursor: pointer;'>";
-        echo "<td style='border: 1px solid black;'>" . $row["id"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["dataInici"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["prioritat"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["descripcio"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["dataFi"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["tecnic"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["departament"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["tipologia"] . "</td>";
-        echo "</td>";
-        echo "</tr>";
+        while ($row = $result->fetch_assoc()) {
+            if ($row["prioritat"] == "Baix") {
+                $color = "var(--baix-color)"; // Verd clar
+            } elseif ($row["prioritat"] == "Mitja") {
+                $color = "var(--mitja-color)"; // Groc clar
+            } elseif ($row["prioritat"] == "Alt") {
+                $color = "var(--alt-color)"; // Vermell clar
+            } else {
+                $color = "white"; // Color per defecte
+            }
+            echo "<tr onclick=\"window.location='modificar_incidencia.php?id=" . $row["id"] . "';\" style='cursor: pointer;'>";
+            echo "<td style='border: 1px solid black;'>" . $row["id"] . "</td>";
+            echo "<td style='border: 1px solid black;'>" . $row["dataInici"] . "</td>";
+            echo "<td style='border: 1px solid black; background-color: $color;'>" . $row["prioritat"] . "</td>";
+            echo "<td style='border: 1px solid black;'>" . $row["descripcio"] . "</td>";
+            echo "<td style='border: 1px solid black;'>" . $row["dataFi"] . "</td>";
+            echo "<td style='border: 1px solid black;'>" . $row["tecnic"] . "</td>";
+            echo "<td style='border: 1px solid black;'>" . $row["departament"] . "</td>";
+            echo "<td style='border: 1px solid black;'>" . $row["tipologia"] . "</td>";
+            echo "</td>";
+            echo "</tr>";
         }
-    ?>
+        ?>
     </table>
 </body>
-<?php include_once "../globals/footer.php";?>
+<?php include_once "../globals/footer.php"; ?>
+
 </html>
