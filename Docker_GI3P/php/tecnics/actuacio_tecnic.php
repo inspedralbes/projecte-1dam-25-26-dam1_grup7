@@ -91,24 +91,32 @@ function crear_incidencia($conn)
     // Consulta SQL per obtenir totes les files de la taula 'cases'
     $sql = "SELECT * FROM departament";
     $result = $conn->query($sql);
-
+    $sqlTech = "SELECT * FROM tecnic";
+    $resultTech = $conn->query($sqlTech);
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Si el formulari s'ha enviatc (mètode POST), cridem a la funció per crear la casa
         crear_incidencia($conn);
     } else {
         ?>
-        <form method="POST" action="actuacio_tecnic.php">
-            <fieldset>
-                <label for="Tecnic">Id Tecnic:</label>
-                <input type="text" id="tecnic" name="tecnic">
-                <input type="submit" value="enviar">
-            </fieldset>
-        </form>
+        <main>
+            <form method="POST" action="actuacio_tecnic.php">
+                <fieldset>
+                    <label for="Tecnic">Identifica't:</label>
+                    <?php
+                    echo "<select name="." tecnic". ">" ; while ($rowTech=$resultTech->fetch_assoc()) {
+                        echo " <option value='" . $rowTech["idTecnic"] . "'>" .$rowTech["nom"] . "</option>" ;
+                        }
+                        echo "</select>";
+                    ?>
+                    <input type="submit" value="enviar">
+                </fieldset>
+            </form>
+        </main>
         <?php
     }
     ?>
 </body>
-<?php include_once "../globals/footer.php";?>
+<?php include_once "../globals/footer.php"; ?>
 
 </html>

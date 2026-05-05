@@ -1,4 +1,4 @@
-<?php include_once "../globals/header.php";?>
+<?php include_once "../globals/header.php"; ?>
 <?php
 
 //Sempre volem tenir una connexió a la base de dades, així que la creem al principi del fitxer
@@ -17,12 +17,12 @@ function crear_incidencia($conn)
 
     $descripcio = $_POST['desc'];
 
-  
+
     if (empty($departament)) {
         echo "<p class='error'>El Departament no pot estar buit.</p>";
         return;
     }
-  
+
     if (empty($descripcio)) {
         echo "<p class='error'>La Descripció no pot estar buida.</p>";
         return;
@@ -31,7 +31,7 @@ function crear_incidencia($conn)
     // Preparar la consulta SQL per inserir una nova casa
     $sql = "INSERT INTO incidencia (departament,descripcio,dataInici) VALUES (?,?, NOW())";
     $stmt = $conn->prepare($sql);  //La variable $conn la tenim per haver inclòs el fitxer connexio.php
-    $stmt->bind_param("is", $departament,  $descripcio);
+    $stmt->bind_param("is", $departament, $descripcio);
 
     // Executar la consulta i comprovar si s'ha inserit correctament
     if ($stmt->execute()) {
@@ -49,6 +49,7 @@ function crear_incidencia($conn)
 ?>
 <!DOCTYPE html>
 <html lang="ca">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,17 +58,17 @@ function crear_incidencia($conn)
 
 <header>
     <a href="javascript:history.back()" class="btn-back">
-            <span class="arrow">←</span> Tornar
-        </a>
+        <span class="arrow">←</span> Tornar
+    </a>
     <h1>Crear una Incidència</h1>
 </header>
-    <hr>
+<hr>
 
 <body class="page-users">
     <?php
 
     //farem un select de la taula departaments i recuperarem una matriu de dades
-
+    
     // Consulta SQL per obtenir totes les files de la taula 'cases'
     $sql = "SELECT * FROM departament";
     $result = $conn->query($sql);
@@ -80,25 +81,27 @@ function crear_incidencia($conn)
         //Mostrem el formulari per crear una nova casa
         //Tanquem el php per poder escriure el codi HTML de forma més còmoda.
         ?>
-        <form method="POST" action="crear_incidencia.php">
-            <fieldset>
-                <legend>Incidencia</legend>
-              
-                <label for="departament">Nom de departament:</label>
+        <main>
+            <form method="POST" action="crear_incidencia.php">
+                <fieldset>
+                    <legend>Nova incidència</legend>
 
-                <select name="dep" id="departamen">
-                 
-            <?php
-            while ($row = $result->fetch_assoc()) {
-                        echo "  <option value=" . $row["idDept"] . ">" . $row["nom"] . "</option>" ;
-                    }
-            ?>
-                </select>
+                    <label for="departament">Departament</label>
+                    <select name="dep" id="departament">
+                        <?php
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option value='{$row["idDept"]}'>{$row["nom"]}</option>";
+                        }
+                        ?>
+                    </select>
 
-                <input type="textarea" id="desc" name="desc">
-                <input type="submit" value="Crear">
-            </fieldset>
-        </form>
+                    <label for="desc">Descripció</label>
+                    <textarea id="desc" name="desc" placeholder="Descriu la incidència..."></textarea>
+
+                    <input type="submit" value="Crear incidència">
+                </fieldset>
+            </form>
+        </main>
 
 
         <?php
@@ -106,5 +109,6 @@ function crear_incidencia($conn)
     }
     ?>
 </body>
-<?php include_once "../globals/footer.php";?>
+<?php include_once "../globals/footer.php"; ?>
+
 </html>

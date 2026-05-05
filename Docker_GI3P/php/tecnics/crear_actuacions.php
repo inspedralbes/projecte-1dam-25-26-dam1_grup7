@@ -1,4 +1,4 @@
-<?php include_once "../globals/header.php";?>
+<?php include_once "../globals/header.php"; ?>
 <?php require_once '../globals/connexio.php'; ?>
 
 <?php
@@ -9,12 +9,12 @@ if (isset($_GET['id'])) {
 ?>
 
 <header>
-        <a href="javascript:history.back()" class="btn-back">
-            <span class="arrow">←</span> Tornar
-        </a>
-        <h1>Crear Actuació</h1>
+    <a href="javascript:history.back()" class="btn-back">
+        <span class="arrow">←</span> Tornar
+    </a>
+    <h1>Crear Actuació</h1>
 </header>
-    <hr>
+<hr>
 
 <body>
     <?php $sql = "SELECT * FROM incidencia where id = $id_incidencia";
@@ -73,7 +73,7 @@ if (isset($_GET['id'])) {
         ?>
     </table>
     <hr>
-    <h4>Crear nova actuació</h4>
+    <h4 style="text-align: center;">Crear nova actuació</h4>
 
     <?php
     function crear_actuacions($conn, $id_incidencia)
@@ -128,25 +128,32 @@ if (isset($_GET['id'])) {
         //Mostrem el formulari per crear una nova casa
         //Tanquem el php per poder escriure el codi HTML de forma més còmoda.
         ?>
-        <form method="POST" action="crear_actuacions.php?id=<?php echo $id_incidencia; ?>">
-            <fieldset>
-                <label for="description">Descripció:</label>
-                <input type="text" id="desc" name="desc">
-                <br>
-                <label for="temps">Temps total per l'actuació:</label>
-                <input type="number" id="temps" name="temps">
-                <br>
-                <label for="visible">Visible per l'Usuari?</label>
-                <input type="hidden" name="visible" id="no_visible" value="0">
-                <input type="checkbox" id="visible" name="visible" value="1">
-                <br>
-                <label for="visible">Finalitzada?</label>
-                <input type="hidden" name="final" id="no_final" value="0">
-                <input type="checkbox" id="final" name="final" value="1">
-                <br>
-                <input type="submit" value="Crear">
-            </fieldset>
-        </form>
+        <main>
+            <form method="POST" action="crear_actuacions.php?id=<?php echo $id_incidencia; ?>">
+                <fieldset>
+                    <label for="description">Descripció:</label>
+                    <input type="text" id="desc" name="desc">
+                    <br>
+                    <label for="temps">Temps total per l'actuació:</label>
+                    <input type="number" id="temps" name="temps">
+                    <br>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="hidden" name="visible" value="0">
+                            <input type="checkbox" id="visible" name="visible" value="1">
+                            <label for="visible">Visible per l'Usuari</label>
+                        </div>
+
+                        <div class="checkbox-item">
+                            <input type="hidden" name="final" value="0">
+                            <input type="checkbox" id="final" name="final" value="1">
+                            <label for="final">Finalitzada</label>
+                        </div>
+                    </div>
+                    <input type="submit" value="Crear">
+                </fieldset>
+            </form>
+        </main>
         <?php
     }
     ?>
@@ -189,5 +196,6 @@ if (isset($_GET['id'])) {
         ?>
     </table>
 </body>
-<?php include_once "../globals/footer.php";?>
+<?php include_once "../globals/footer.php"; ?>
+
 </html>

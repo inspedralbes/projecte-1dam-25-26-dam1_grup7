@@ -246,9 +246,90 @@ footer p {
 
 
 
+form {
 
+    padding: 30px;
+    border-radius: 16px;
 
+    width: 100%;
+    max-width: 500px;
+}
 
+fieldset {
+    border: none;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+legend {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--user-main);
+    margin-bottom: 10px;
+}
+
+label {
+    font-weight: 600;
+    color: #334155;
+}
+
+select,
+textarea {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    font-size: 14px;
+    transition: border 0.2s;
+}
+
+select:focus,
+textarea:focus {
+    border-color: var(--user-main);
+    outline: none;
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+input[type="submit"] {
+    margin-top: 10px;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--user-main);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+input[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.checkbox-group {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* opcional: hacerlos más bonitos */
+.checkbox-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
 
 
 
