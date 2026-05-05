@@ -42,18 +42,18 @@ if (isset($_GET['id'])) {
         </tr>
         <?php
         while ($row = $result->fetch_assoc()) {
-            //Si la dataFi no està buida, vol dir que la incidència està finalitzada
+            
             if (!empty($row["dataFi"])) {
                 $incidencia_finalitzada = true;
             }
             if ($row["prioritat"] == "Baix") {
-                $color = "var(--baix-color)"; // Verd clar
+                $color = "var(--baix-color)"; 
             } elseif ($row["prioritat"] == "Mitja") {
-                $color = "var(--mitja-color)"; // Groc clar
+                $color = "var(--mitja-color)"; 
             } elseif ($row["prioritat"] == "Alt") {
-                $color = "var(--alt-color)"; // Vermell clar
+                $color = "var(--alt-color)"; 
             } else {
-                $color = "white"; // Color per defecte
+                $color = "white"; 
             }
 
             echo "<tr style='border: 1px solid black;'>";

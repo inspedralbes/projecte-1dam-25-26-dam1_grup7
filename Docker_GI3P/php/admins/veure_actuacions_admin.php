@@ -59,10 +59,19 @@ if (isset($_GET['id'])) {
         </tr>
         <?php
         while ($row = $result->fetch_assoc()) {
+            if ($row["prioritat"] == "Baix") {
+                $color = "var(--baix-color)";
+            } elseif ($row["prioritat"] == "Mitja") {
+                $color = "var(--mitja-color)";
+            } elseif ($row["prioritat"] == "Alt") {
+                $color = "var(--alt-color)";
+            } else {
+                $color = "white"; 
+            }
             echo "<tr style='border: 1px solid black;'>";
             echo "<td style='border: 1px solid black;'>" . $row["id"] . "</td>";
             echo "<td style='border: 1px solid black;'>" . $row["dataInici"] . "</td>";
-            echo "<td style='border: 1px solid black;'>" . $row["prioritat"] . "</td>";
+            echo "<td style='border: 1px solid black; background-color: $color;'>" . $row["prioritat"] . "</td>";
             echo "<td style='border: 1px solid black;'>" . $row["descripcio"] . "</td>";
             echo "<td style='border: 1px solid black;'>" . $row["dataFi"] . "</td>";
             echo "<td style='border: 1px solid black;'>" . $row["tecnic"] . "</td>";

@@ -49,13 +49,13 @@ function crear_incidencia($conn)
             $row_cont = $res_cont->fetch_assoc();
             $total_actuacions = $row_cont['total'];
             if ($row["prioritat"] == "Baix") {
-                $color = "var(--baix-color)"; // Verd clar
+                $color = "var(--baix-color)"; 
             } elseif ($row["prioritat"] == "Mitja") {
-                $color = "var(--mitja-color)"; // Groc clar
+                $color = "var(--mitja-color)"; 
             } elseif ($row["prioritat"] == "Alt") {
-                $color = "var(--alt-color)"; // Vermell clar
+                $color = "var(--alt-color)"; 
             } else {
-                $color = "white"; // Color per defecte
+                $color = "white"; 
             }
             echo "<tr onclick=\"window.location='crear_actuacions.php?id=" . $row["id"] . "';\" style='cursor: pointer;'>";
             echo "<td style='border: 1px solid black; padding: 12px 15px;'>" . $row["id"] . "</td>";

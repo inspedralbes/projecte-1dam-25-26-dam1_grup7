@@ -43,13 +43,13 @@
         <?php
         while ($row = $result->fetch_assoc()) {
             if ($row["prioritat"] == "Baix") {
-                $color = "var(--baix-color)"; // Verd clar
+                $color = "var(--baix-color)"; 
             } elseif ($row["prioritat"] == "Mitja") {
-                $color = "var(--mitja-color)"; // Groc clar
+                $color = "var(--mitja-color)"; 
             } elseif ($row["prioritat"] == "Alt") {
-                $color = "var(--alt-color)"; // Vermell clar
+                $color = "var(--alt-color)"; 
             } else {
-                $color = "white"; // Color per defecte
+                $color = "white"; 
             }
             echo "<tr onclick=\"window.location='veure_actuacions.php?id=" . $row["id"] . "';\" style='cursor: pointer;'>";
             echo "<td style='border: 1px solid black;'>" . $row["id"] . "</td>";
