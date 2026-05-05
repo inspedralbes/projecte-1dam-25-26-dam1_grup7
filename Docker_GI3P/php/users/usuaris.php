@@ -2,7 +2,7 @@
 <html>
 <body class="page-users">
     <header>
-        <a href="javascript:history.back()" class="btn-back">
+        <a href="../index.php" class="btn-back">
             <span class="arrow">←</span> Tornar
         </a>
         <h1>Gestor d'incidències per a Usuaris</h1>

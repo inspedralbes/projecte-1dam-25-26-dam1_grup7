@@ -57,7 +57,7 @@ function crear_incidencia($conn)
 </head>
 
 <header>
-    <a href="javascript:history.back()" class="btn-back">
+    <a href="usuaris.php" class="btn-back">
         <span class="arrow">←</span> Tornar
     </a>
     <h1>Crear una Incidència</h1>

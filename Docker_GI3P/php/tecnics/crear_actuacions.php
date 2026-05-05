@@ -9,7 +9,7 @@ if (isset($_GET['id'])) {
 ?>
 
 <header>
-    <a href="javascript:history.back()" class="btn-back">
+    <a href="actuacio_tecnic.php" class="btn-back">
         <span class="arrow">←</span> Tornar
     </a>
     <h1>Crear Actuació</h1>

@@ -2,7 +2,7 @@
 <?php require_once '../globals/connexio.php'; ?>
 
 <header>
-    <a href="javascript:history.back()" class="btn-back">
+    <a href="usuaris.php" class="btn-back">
         <span class="arrow">←</span> Tornar
     </a>
     <h1>Veure Incidències</h1>

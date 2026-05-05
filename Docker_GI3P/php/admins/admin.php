@@ -2,7 +2,7 @@
 <html>
 <body class="page-admin">
     <header>
-        <a href="javascript:history.back()" class="btn-back">
+        <a href="../index.php" class="btn-back">
             <span class="arrow">←</span> Tornar
         </a>
         <h1>Gestor d'incidències per a Administradors</h1>

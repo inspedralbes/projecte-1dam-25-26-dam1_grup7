@@ -7,7 +7,7 @@ if (isset($_GET['id'])){
 ?>
 <html>
 <header>
-    <a href="javascript:history.back()" class="btn-back">
+    <a href="assignar_incidencia.php" class="btn-back">
             <span class="arrow">←</span> Tornar
         </a>
         <h1>Modificar Incidencia</h1>

@@ -10,7 +10,7 @@ if (isset($_GET['id'])) {
 
 <body class="page-users">
     <header>
-        <a href="javascript:history.back()" class="btn-back">
+        <a href="veure_incidencia.php" class="btn-back">
             <span class="arrow">←</span> Tornar
         </a>
         <h1>Actuacions</h1>
