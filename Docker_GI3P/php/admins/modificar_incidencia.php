@@ -44,8 +44,8 @@ if (isset($_GET['id'])){
         modificar_incidencia($conn, $id_incidencia);
     } else {
     ?>
-
-    <form method="POST" action="?id=<?php echo $id_incidencia; ?>">
+    <main>
+    <form class="ignore-css" method="POST" action="?id=<?php echo $id_incidencia;?>">
     <table>
         <tr style="border: 1px solid black;">
             <th style="border: 1px solid black;">
@@ -114,6 +114,7 @@ if (isset($_GET['id'])){
 
     <input type="submit" value="Guardar">
 </form>
+</main>
 <?php 
     }
     ?>

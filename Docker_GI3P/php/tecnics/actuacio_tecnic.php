@@ -27,7 +27,7 @@ function crear_incidencia($conn)
     $sql = "SELECT * FROM incidencia WHERE tecnic = '$id_tecnic' AND dataFI IS NULL";
     $result = $conn->query($sql);
 
-    echo "<h3> Incidències </h3>";
+    echo "<h3 style='text-align: center;'> Incidències </h3>";
     if ($result && $result->num_rows > 0) {
         echo "<table style='width: 90%; margin: 20px auto; border-collapse: collapse; border: 1px solid black;'>";
         echo "<tr style='background-color: #f2f2f2;'>";
@@ -71,7 +71,7 @@ function crear_incidencia($conn)
         }
         echo "</table>";
     } else {
-        echo "<p>No s'han trobat incidències per a aquest tècnic.</p>";
+        echo "<p style='text-align: center;'>No s'han trobat incidències per a aquest tècnic.</p>";
     }
 }
 ?>

@@ -97,7 +97,10 @@ if (isset($_GET['id'])) {
         $stmt->bind_param("siii", $descripcio, $visible, $temps, $id_incidencia);
 
         // Executar la consulta i comprovar errors
-        if (!$stmt->execute()) {
+        if ($stmt->execute()) {
+            echo "<p class='success'>Actuació creada correctament.</p>";
+        }
+        else{
             echo "<p class='error'>Error al crear l'actuació: " . htmlspecialchars($stmt->error) . "</p>";
         }
 
@@ -114,7 +117,6 @@ if (isset($_GET['id'])) {
             exit();
         }
 
-        //Redirigir per evitar l'enviament duplicat del formulari
         header("Location: " . $_SERVER['PHP_SELF'] . "?id=" . $id_incidencia);
         exit();
 

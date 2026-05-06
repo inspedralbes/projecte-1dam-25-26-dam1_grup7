@@ -244,8 +244,7 @@ footer p {
     transform: translateX(-4px); 
 }
 
-
-
+.ignore-css{all:unset;}
 
 
 
