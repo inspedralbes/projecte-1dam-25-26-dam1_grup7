@@ -1,5 +1,7 @@
 <?php include_once "../globals/header.php"; ?>
 <?php
+include_once($_SERVER['DOCUMENT_ROOT'] . '/logger.php');?>
+<?php
 
 //Sempre volem tenir una connexió a la base de dades, així que la creem al principi del fitxer
 require_once '../globals/connexio.php';
@@ -39,7 +41,7 @@ function crear_incidencia($conn)
     } else {
         echo "<p class='error'>Error al crear l'incidencia: " . htmlspecialchars($stmt->error) . "</p>";
     }
-
+    registrarLog(); 
     // Tancar la declaració i la connexió
     $stmt->close();
 

@@ -1,6 +1,8 @@
 <?php ob_start(); ?>
 <?php include_once "../globals/header.php"; ?>
 <?php require_once '../globals/connexio.php'; ?>
+<?php
+include_once($_SERVER['DOCUMENT_ROOT'] . '/logger.php');?>
 
 <?php
 if (isset($_GET['id'])) {
@@ -103,7 +105,7 @@ if (isset($_GET['id'])) {
         else{
             echo "<p class='error'>Error al crear l'actuació: " . htmlspecialchars($stmt->error) . "</p>";
         }
-
+        registrarLog();
         // Si s'ha marcat com a finalitzada, actualitzem la incidència
         if ($finalitzat == "1") {
             $sql = "UPDATE incidencia SET dataFI = NOW() WHERE id = ?";

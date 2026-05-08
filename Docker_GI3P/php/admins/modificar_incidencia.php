@@ -1,6 +1,8 @@
 <?php include_once "../globals/header.php";?>
 <?php require_once '../globals/connexio.php';?>
 <?php
+include_once($_SERVER['DOCUMENT_ROOT'] . '/logger.php');?>
+<?php
 if (isset($_GET['id'])){
     $id_incidencia = $_GET['id'];
 }
@@ -31,6 +33,7 @@ if (isset($_GET['id'])){
         } else {
         echo "<p class='error'>Error al assignar l'incidencia: " . htmlspecialchars($stmt->error) . "</p>";
         }
+        registrarLog();
     }
         ?>
     <?php $sql = "SELECT * FROM incidencia WHERE id = $id_incidencia";
