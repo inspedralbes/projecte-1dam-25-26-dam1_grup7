@@ -9,3 +9,4 @@ db_data7/
 db_data8/
 vendor/
 php/composer.lock
+mongo_data/

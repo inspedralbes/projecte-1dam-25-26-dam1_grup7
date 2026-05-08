@@ -1,0 +1,38 @@
+[
+  {
+    "url": "https://api.elmeuprojecte.cat/login",
+    "metode": "POST",
+    "usuari_id": null,
+    "timestamp": { "$date": "2026-05-08T08:15:00Z" },
+    "navegador": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0",
+    "ip": "84.12.34.56",
+    "temps_resposta_ms": 340
+  },
+  {
+    "url": "https://api.elmeuprojecte.cat/perfil",
+    "metode": "GET",
+    "usuari_id": { "$oid": "651a2b3c4d5e6f7a8b9c0d11" },
+    "timestamp": { "$date": "2026-05-08T08:16:22Z" },
+    "navegador": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Safari/605.1.15",
+    "ip": "192.168.1.133",
+    "temps_resposta_ms": 45
+  },
+  {
+    "url": "https://api.elmeuprojecte.cat/dades/actualitzar",
+    "metode": "PUT",
+    "usuari_id": { "$oid": "651a2b3c4d5e6f7a8b9c0d22" },
+    "timestamp": { "$date": "2026-05-08T08:18:05Z" },
+    "navegador": "Mozilla/5.0 (X11; Linux x86_64) Firefox/121.0",
+    "ip": "217.124.99.2",
+    "temps_resposta_ms": 120
+  },
+  {
+    "url": "https://api.elmeuprojecte.cat/usuari/esborrar",
+    "metode": "DELETE",
+    "usuari_id": { "$oid": "651a2b3c4d5e6f7a8b9c0d33" },
+    "timestamp": { "$date": "2026-05-07T14:22:10Z" },
+    "navegador": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_2) Mobile/15E148",
+    "ip": "80.55.44.11",
+    "temps_resposta_ms": 850
+  }
+]
