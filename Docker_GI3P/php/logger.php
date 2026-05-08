@@ -8,7 +8,7 @@ function registrarLog() {
     $usuari_id = $_SESSION['user_id'] ?? 'Anònim';
 
     try {
-        $client = new Client("mongodb://root:example@mongo:27017");
+        $client = new Client("mongodb+srv://admin:example@gi3p.rjbxiyc.mongodb.net/?appName=GI3P");
         $collection = $client->Logs->registres_connexio;
         
         $temps_ms = round((microtime(true) - $inici) * 1000);
