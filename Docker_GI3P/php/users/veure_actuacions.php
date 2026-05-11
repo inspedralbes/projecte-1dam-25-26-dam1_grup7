@@ -1,6 +1,6 @@
 <?php include_once "../globals/header.php"; ?>
 <?php require_once '../globals/connexio.php'; ?>
-
+<?php include_once($_SERVER['DOCUMENT_ROOT'] . '/logger.php'); registrarLog();?>
 <?php
 
 if (isset($_GET['id'])) {
