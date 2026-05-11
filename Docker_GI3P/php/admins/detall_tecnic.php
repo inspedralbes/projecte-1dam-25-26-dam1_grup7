@@ -42,24 +42,34 @@ $nomTecnic = urldecode($_GET['nom']);
             <canvas id="chartDetall"></canvas>
             
             <div style="margin-top: 20px; text-align: left; display: inline-block;">
-                <p><strong>Resoltes:</strong> <?php echo $resoltes; ?></p>
-                <p><strong>En procés:</strong> <?php echo $enProces; ?></p>
-                <p><strong>Total:</strong> <?php echo ($resoltes + $enProces); ?></p>
+                <p>
+                <strong>Resoltes:</strong> <?php echo $resoltes; ?>
+                <strong>En procés:</strong> <?php echo $enProces; ?>
+                <strong>Total:</strong> <?php echo ($resoltes + $enProces); ?>
+            </p>
             </div>
         </div>
 
         <script>
-            new Chart(document.getElementById('chartDetall'), {
-                type: 'bar',
-                data: {
-                    labels: ['Resoltes', 'En Procés'],
-                    datasets: [{
-                        data: [<?php echo $resoltes; ?>, <?php echo $enProces; ?>],
-                        backgroundColor: ['#3dd600', '#c50000']
-                    }]
+    new Chart(document.getElementById('chartDetall'), {
+        type: 'bar',
+        data: {
+            labels: ['Resoltes', 'En Procés'],
+            datasets: [{
+                label: 'Incidències',
+                data: [<?php echo $resoltes; ?>, <?php echo $enProces; ?>],
+                backgroundColor: ['#3dd600', '#c50000']
+            }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: false
                 }
-            });
-        </script>
+            }
+        }
+    });
+</script>
     <?php
     }
     registrarLog();
