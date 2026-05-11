@@ -1,5 +1,6 @@
 <?php include_once "../globals/header.php"; ?>
 <?php require_once '../globals/connexio.php'; ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT'] . '/logger.php'); registrarLog();?>
 
 <header>
     <a href="admin.php" class="btn-back">

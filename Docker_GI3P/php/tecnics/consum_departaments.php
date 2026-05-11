@@ -1,6 +1,5 @@
 <?php include_once "../globals/header.php"; ?>
-<?php
-include_once($_SERVER['DOCUMENT_ROOT'] . '/logger.php'); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT'] . '/logger.php'); registrarLog();?>
 <?php
 
 //Sempre volem tenir una connexió a la base de dades, així que la creem al principi del fitxer
@@ -27,14 +26,14 @@ require_once '../globals/connexio.php';
 </head>
 
 <header>
-    <a href="../users/usuaris.php" class="btn-back">
+    <a href="tecnics.php" class="btn-back">
         <span class="arrow">←</span> Tornar
     </a>
     <h1>Consum de Departaments</h1>
 </header>
 <hr>
 
-<body class="page-users">
+<body class="page-tecnics">
     <?php
 
     $sql = "SELECT d.nom as nom_dept, COUNT(DISTINCT i.id) as total_incidencies, SUM(a.temps) as total_minuts FROM departament d LEFT JOIN incidencia i ON d.idDept = i.departament LEFT JOIN actuacions a ON i.id = a.incidencia GROUP BY d.idDept HAVING total_incidencies > 0";
@@ -99,8 +98,6 @@ require_once '../globals/connexio.php';
     } else {
         echo "<p class='info'>No hi ha dades disponibles.</p>";
     }
-
-    registrarLog();
 
     ?>
 </body>
