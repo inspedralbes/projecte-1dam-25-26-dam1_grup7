@@ -180,15 +180,17 @@ if (isset($_GET['id'])) {
             <th style="border: 1px solid black;">ID</th>
         </tr>
         <?php
+        $numIncidencia = 1;
         while ($row = $result->fetch_assoc()) {
             echo "<tr style='border: 1px solid black;'>";
-            echo "<td style='border: 1px solid black;'>" . $row["idActuacio"] . "</td>";
+            echo "<td style='border: 1px solid black;'>" . $numIncidencia . "</td>";
             echo "<td style='border: 1px solid black;'>" . $row["dataActuacio"] . "</td>";
             echo "<td style='border: 1px solid black;'>" . $row["descActuacio"] . "</td>";
             echo "<td style='border: 1px solid black;'>" . $row["visible"] . "</td>";
             echo "<td style='border: 1px solid black;'>" . $row["temps"] . "</td>";
             echo "<td style='border: 1px solid black;'>" . $row["incidencia"] . "</td>";
             echo "</tr>";
+            $numIncidencia++;
         }
         ?>
     </table>
