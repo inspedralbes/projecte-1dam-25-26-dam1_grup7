@@ -50,7 +50,7 @@ function crear_incidencia($conn)
             $total_actuacions = $row_cont['total'];
             if ($row["prioritat"] == "Baix") {
                 $color = "var(--baix-color)"; 
-            } elseif ($row["prioritat"] == "Mitja") {
+            } elseif ($row["prioritat"] == "Mitjà") {
                 $color = "var(--mitja-color)"; 
             } elseif ($row["prioritat"] == "Alt") {
                 $color = "var(--alt-color)"; 
@@ -95,7 +95,6 @@ function crear_incidencia($conn)
 
     <?php
 
-    //farem un select de la taula departaments i recuperarem una matriu de dades
     
     // Consulta SQL per obtenir totes les files de la taula 'cases'
     $sql = "SELECT * FROM departament";

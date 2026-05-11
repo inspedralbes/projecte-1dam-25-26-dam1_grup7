@@ -14,51 +14,68 @@ require_once '../globals/connexio.php';
  */
 function veure_consum($conn)
 {
-    $sql = "SELECT d.nom as nom_dept, COUNT(i.id) as total_incidencies FROM incidencia i INNER JOIN departament d ON i.departament = d.idDept GROUP BY d.idDept";
+   
+    $sql = "SELECT d.nom as nom_dept, COUNT(DISTINCT i.id) as total_incidencies, SUM(a.temps) as total_minuts FROM departament d LEFT JOIN incidencia i ON d.idDept = i.departament LEFT JOIN actuacions a ON i.id = a.incidencia GROUP BY d.idDept HAVING total_incidencies > 0";
 
     $resultat = $conn->query($sql);
+
     $noms = [];
-    $totals = [];
+    $incidencies = [];
+    $hores = [];
 
     if ($resultat->num_rows > 0) {
         while ($row = $resultat->fetch_assoc()) {
             $noms[] = $row['nom_dept'];
-            $totals[] = $row['total_incidencies'];
+            $incidencies[] = $row['total_incidencies'];
+            $hores[] = round(($row['total_minuts'] ?? 0) / 60, 2);
         }
 
         $jsonNoms = json_encode($noms);
-        $jsonTotals = json_encode($totals);
+        $jsonIncidencies = json_encode($incidencies);
+        $jsonHores = json_encode($hores);
 
-        echo "<h3>Distribució d'Incidències per Departament</h3>";
-        echo "<div style='max-width: 450px; margin: auto;'><canvas id='myChart'></canvas></div>";
+        echo "<div style='display: flex; flex-wrap: wrap; justify-content: space-around; gap: 20px; margin-top: 30px;'>";
+        echo "<div style='width: 400px; text-align: center;'>
+                    <h3>Núm. d'Incidències</h3>
+                    <canvas id='chartIncidencies'></canvas>
+                  </div>";
+
+        echo "<div style='width: 400px; text-align: center;'>
+                    <h3>Temps Total (Hores)</h3>
+                    <canvas id='chartHores'></canvas>
+                  </div>";
+
+        echo "</div>";
 
         ?>
         <script>
-            const ctx = document.getElementById('myChart');
-            new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: <?php echo $jsonNoms; ?>,
-                    datasets: [{
-                        label: 'Total Incidències',
-                        data: <?php echo $jsonTotals; ?>,
-                        backgroundColor: [
-                            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'
-                        ],
-                        hoverOffset: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: { position: 'bottom' }
+                const colores = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'];
+
+                new Chart(document.getElementById('chartIncidencies'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: <?php echo $jsonNoms; ?>,
+                        datasets: [{
+                            data: <?php echo $jsonIncidencies; ?>,
+                            backgroundColor: colores
+                        }]
                     }
-                }
-            });
+                });
+                new Chart(document.getElementById('chartHores'), {
+                    type: 'doughnut', 
+                    data: {
+                        labels: <?php echo $jsonNoms; ?>,
+                        datasets: [{
+                            label: 'Hores Totals',
+                            data: <?php echo $jsonHores; ?>,
+                            backgroundColor: colores
+                        }]
+                    }
+                });
         </script>
         <?php
     } else {
-        echo "<p class='info'>No hi ha dades d'incidències.</p>";
+        echo "<p class='info'>No hi ha dades disponibles.</p>";
     }
 
     registrarLog();
@@ -90,7 +107,7 @@ function veure_consum($conn)
 <body class="page-users">
     <?php
 
-    //farem un select de la taula departaments i recuperarem una matriu de dades
+    
     
     // Consulta SQL per obtenir totes les files de la taula 'cases'
     $sql = "SELECT * FROM departament";

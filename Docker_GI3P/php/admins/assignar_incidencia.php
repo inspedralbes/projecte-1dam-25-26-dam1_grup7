@@ -12,7 +12,6 @@
 <body class="page-admin">
     <?php
 
-    //farem un select de la taula departaments i recuperarem una matriu de dades
     
     // Consulta SQL per obtenir totes les files de la taula 'cases'
     

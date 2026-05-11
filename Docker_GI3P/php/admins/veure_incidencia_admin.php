@@ -44,7 +44,7 @@
         while ($row = $result->fetch_assoc()) {
             if ($row["prioritat"] == "Baix") {
                 $color = "var(--baix-color)"; 
-            } elseif ($row["prioritat"] == "Mitja") {
+            } elseif ($row["prioritat"] == "Mitjà") {
                 $color = "var(--mitja-color)"; 
             } elseif ($row["prioritat"] == "Alt") {
                 $color = "var(--alt-color)"; 

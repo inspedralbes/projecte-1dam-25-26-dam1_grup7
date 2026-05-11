@@ -50,7 +50,7 @@ if (isset($_GET['id'])) {
             }
             if ($row["prioritat"] == "Baix") {
                 $color = "var(--baix-color)"; 
-            } elseif ($row["prioritat"] == "Mitja") {
+            } elseif ($row["prioritat"] == "Mitjà") {
                 $color = "var(--mitja-color)"; 
             } elseif ($row["prioritat"] == "Alt") {
                 $color = "var(--alt-color)"; 
@@ -92,8 +92,6 @@ if (isset($_GET['id'])) {
             echo "<p class='error'>La Descripció no pot estar buida.</p>";
             return;
         }
-
-        // Preparar la consulta SQL per inserir una nova actuació
         $sql = "INSERT INTO actuacions (dataActuacio, descActuacio, visible, temps, incidencia) VALUES (NOW(), ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("siii", $descripcio, $visible, $temps, $id_incidencia);
@@ -106,7 +104,7 @@ if (isset($_GET['id'])) {
             echo "<p class='error'>Error al crear l'actuació: " . htmlspecialchars($stmt->error) . "</p>";
         }
         registrarLog();
-        // Si s'ha marcat com a finalitzada, actualitzem la incidència
+        
         if ($finalitzat == "1") {
             $sql = "UPDATE incidencia SET dataFI = NOW() WHERE id = ?";
             $stmt_upd = $conn->prepare($sql);
@@ -114,7 +112,6 @@ if (isset($_GET['id'])) {
             $stmt_upd->execute();
             $stmt_upd->close();
 
-            //Redirigir a la mateixa pàgina per mostrar el missatge de "Completat"
             header("Location: " . $_SERVER['PHP_SELF'] . "?id=" . $id_incidencia . "&status=completat");
             exit();
         }
@@ -132,7 +129,6 @@ if (isset($_GET['id'])) {
         crear_actuacions($conn, $id_incidencia);
     }
 
-    // Amagar o mostrar el formulari segons l'estat de la incidència
     if ($incidencia_finalitzada) {
         echo "<h2 style='text-align: center;'>Incidència finalitzada</h2>";
     } else {
