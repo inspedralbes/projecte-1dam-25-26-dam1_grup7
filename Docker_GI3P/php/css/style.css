@@ -334,6 +334,39 @@ input[type="submit"]:hover {
     cursor: pointer;
 }
 
+/* Estils específics per al comptador d'accessos */
+.access-counter-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    font-family: sans-serif; /* O la que facis servir */
+}
+
+.access-counter-card {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    text-align: center;
+    border: 1px solid #eeeeee;
+    width: 300px;
+}
+
+.access-counter-card h3 {
+    color: #7f8c8d !important;
+    font-size: 1rem !important;
+    text-transform: uppercase !important;
+    margin-bottom: 10px !important;
+    letter-spacing: 1px;
+}
+
+.access-counter-big-number {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin: 0;
+    line-height: 1;
+}
 
 
 

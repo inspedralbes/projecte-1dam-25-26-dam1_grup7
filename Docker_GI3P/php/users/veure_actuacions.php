@@ -116,8 +116,9 @@ if (isset($_GET['id'])) {
                 echo "<td style='border: 1px solid black;'>" . $row["temps"] . " minuts" . "</td>";
                 echo "<td style='border: 1px solid black;'>" . $row["incidencia"] . "</td>";
                 echo "</tr>";
+                $numIncidencia++;
             }
-            $numIncidencia++;
+            
         }
         ?>
     </table>
