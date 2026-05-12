@@ -5,6 +5,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/logger.php'); registrarLog();?>
 <body>
     <header>
         <h1>Gestor d'incidències</h1>
+        <button id="logout-btn"><a href="globals/logout.php">Tancar sessió</a></button>
     </header>
     <hr>
     <main>
@@ -14,7 +15,6 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/logger.php'); registrarLog();?>
         <a href="tecnics/tecnics.php"><input id="tech-btn" type="button" value="Tècnics"></a>
         <a href="admins/admin.php"><input id="admin-btn" type="button" value="Administradors"></a>
     </div>
-    <a href="globals/logout.php"><button>Sortir</button></a>
     </main>
 </body>
 <?php include_once "globals/footer.php";?>

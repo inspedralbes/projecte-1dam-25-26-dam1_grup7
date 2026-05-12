@@ -80,13 +80,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
 
     <meta charset="UTF-8">
-
+    <link href="../css/login.css" rel="stylesheet">
     <title>Login</title>
 
 </head>
 
 <body>
-
+    <div class="login-container">
     <h1>Inici de sessió</h1>
 
     <?php
@@ -98,20 +98,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     ?>
-
+    
     <form method="POST" action="login.php">
+        
+        <label>Usuari:</label>
 
-        <label>Usuari:</label><br>
+        <input type="text" name="usuari" required><br>
 
-        <input type="text" name="usuari" required><br><br>
+        <label>Contrasenya:</label>
 
-        <label>Contrasenya:</label><br>
-
-        <input type="password" name="password" required><br><br>
+        <input type="password" name="password" required><br>
 
         <button type="submit">Entrar</button>
 
     </form>
+    </div>
 </body>
 
 </html>

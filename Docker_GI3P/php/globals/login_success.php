@@ -18,19 +18,14 @@ if (!isset($_SESSION["usuari"])) {
 <head>
     <meta charset="UTF-8">
     <title>Pàgina privada</title>
-    <meta http-equiv="refresh" content="1;url=../index.php"/>
+    <meta http-equiv="refresh" content="1;url=../index.php">
+    <link href="../css/login.css" rel="stylesheet">
 
 </head>
 
 <body>
 
     <h1>Has entrat correctament</h1>
-
-    <p>Benvingut/da, <?php echo $_SESSION["usuari"]; ?></p>
-
-    <p>Aquesta pàgina només es pot veure si has iniciat sessió.</p>
-
-    <a href="logout.php">Tancar sessió</a>
 
 </body>
 
