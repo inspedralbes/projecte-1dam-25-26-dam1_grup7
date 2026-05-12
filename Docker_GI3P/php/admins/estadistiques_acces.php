@@ -34,48 +34,47 @@ require_once '../globals/connexio.php';
 try {
 
     $client = new MongoDB\Client("mongodb+srv://admin:example@gi3p.rjbxiyc.mongodb.net/?appName=GI3P");
-
     $collection = $client->Logs->registres_connexio;
 
-    // FILTRE DE TEMPS
+    // USUARIOS (dropdown)
+    $usuarisDisponibles = $collection->distinct('usuari');
+
+    // FILTRE TIEMPO
     $filtro = $_GET['temps'] ?? 'tots';
 
     $fechaInicio = null;
 
     switch ($filtro) {
-
         case '24h':
-            $fechaInicio = new MongoDB\BSON\UTCDateTime(
-                (time() - 86400) * 1000
-            );
+            $fechaInicio = new MongoDB\BSON\UTCDateTime((time() - 86400) * 1000);
             break;
 
         case '7dies':
-            $fechaInicio = new MongoDB\BSON\UTCDateTime(
-                (time() - (7 * 86400)) * 1000
-            );
+            $fechaInicio = new MongoDB\BSON\UTCDateTime((time() - (7 * 86400)) * 1000);
             break;
 
         case '30dies':
-            $fechaInicio = new MongoDB\BSON\UTCDateTime(
-                (time() - (30 * 86400)) * 1000
-            );
+            $fechaInicio = new MongoDB\BSON\UTCDateTime((time() - (30 * 86400)) * 1000);
             break;
     }
 
-    // CONDICIÓ DE FILTRE
+    // CONDICIONES
     $condicio = [];
 
     if ($fechaInicio != null) {
-        $condicio = [
-            'timestamp' => ['$gte' => $fechaInicio]
-        ];
+        $condicio['timestamp'] = ['$gte' => $fechaInicio];
     }
 
-    // TOTAL ACCESSOS
+    if (!empty($_GET['usuari'])) {
+        $condicio['usuari'] = $_GET['usuari'];
+    }
+
+    // TOTAL
     $total_global = $collection->countDocuments($condicio);
 
-    // TOP PÀGINES
+    // =========================
+    // TOP PÀGINES (SIN FILTRO URL)
+    // =========================
     $pipeline = [];
 
     if (!empty($condicio)) {
@@ -94,124 +93,158 @@ try {
 
     $topPagines = $collection->aggregate($pipeline);
 
-    $labels = [];
-    $valors = [];
+    $labelsPagines = [];
+    $valorsPagines = [];
 
     foreach ($topPagines as $pagina) {
-        $labels[] = $pagina['_id'];
-        $valors[] = $pagina['count'];
+        $labelsPagines[] = $pagina['_id'];
+        $valorsPagines[] = $pagina['count'];
+    }
+
+    // =========================
+    // TOP USERS
+    // =========================
+    $pipeline2 = [];
+
+    if (!empty($condicio)) {
+        $pipeline2[] = ['$match' => $condicio];
+    }
+
+    $pipeline2[] = [
+        '$group' => [
+            '_id' => '$usuari',
+            'count' => ['$sum' => 1]
+        ]
+    ];
+
+    $pipeline2[] = ['$sort' => ['count' => -1]];
+    $pipeline2[] = ['$limit' => 5];
+
+    $topUsers = $collection->aggregate($pipeline2);
+
+    $labelsUsers = [];
+    $valorsUsers = [];
+
+    foreach ($topUsers as $user) {
+        $labelsUsers[] = $user['_id'] ?? 'Desconegut';
+        $valorsUsers[] = $user['count'];
     }
 
 ?>
 
-    <!-- FILTRE -->
-    <form method="GET" style="text-align:center; margin-top:20px;">
-        <label for="temps"><strong>Filtrar per temps:</strong></label>
+<!-- ========================= -->
+<!-- TOP BAR -->
+<!-- ========================= -->
+<div style="display:flex; justify-content:space-between; align-items:flex-start; margin:20px 40px; gap:20px;">
 
-        <select name="temps" id="temps" onchange="this.form.submit()">
-            <option value="tots" <?= $filtro == 'tots' ? 'selected' : '' ?>>
-                Tots
-            </option>
-
-            <option value="24h" <?= $filtro == '24h' ? 'selected' : '' ?>>
-                Últimes 24 hores
-            </option>
-
-            <option value="7dies" <?= $filtro == '7dies' ? 'selected' : '' ?>>
-                Últims 7 dies
-            </option>
-
-            <option value="30dies" <?= $filtro == '30dies' ? 'selected' : '' ?>>
-                Últims 30 dies
-            </option>
-        </select>
-    </form>
-
-    <!-- TOTAL ACCESSOS -->
+    <!-- CONTADOR -->
     <div class="access-counter-container">
         <div class="access-counter-card">
-
             <h3>Total d'accessos</h3>
-
-            <p class="access-counter-big-number">
-                <?php echo ($total_global); ?>
-            </p>
-
+            <p class="access-counter-big-number"><?= $total_global ?></p>
         </div>
     </div>
 
-    <!-- GRÀFIC -->
-    <div class="chart-container"
-         style="position: relative; height:40vh; width:80vw; margin: 40px auto;">
+    <!-- FILTROS -->
+    <form method="GET" style="display:flex; gap:15px; align-items:center; flex-wrap:wrap; justify-content:flex-end;">
 
+        <!-- TIEMPO -->
+        <div>
+            <label><strong>Temps:</strong></label>
+            <select name="temps">
+                <option value="tots" <?= $filtro == 'tots' ? 'selected' : '' ?>>Tots</option>
+                <option value="24h" <?= $filtro == '24h' ? 'selected' : '' ?>>24h</option>
+                <option value="7dies" <?= $filtro == '7dies' ? 'selected' : '' ?>>7 dies</option>
+                <option value="30dies" <?= $filtro == '30dies' ? 'selected' : '' ?>>30 dies</option>
+            </select>
+        </div>
+
+        <!-- USUARIO -->
+        <div>
+            <label><strong>Usuari:</strong></label>
+            <select name="usuari">
+                <option value="">Tots</option>
+                <?php foreach ($usuarisDisponibles as $u): ?>
+                    <option value="<?= $u ?>" <?= (($_GET['usuari'] ?? '') == $u) ? 'selected' : '' ?>>
+                        <?= $u ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <button type="submit">Filtrar</button>
+
+    </form>
+
+</div>
+
+<!-- ========================= -->
+<!-- GRÁFICOS -->
+<!-- ========================= -->
+<div style="display:flex; justify-content:space-between; gap:40px; margin:40px; align-items:flex-start;">
+
+    <!-- PÁGINAS -->
+    <div style="flex:1; min-width:400px;">
         <h3>Top 5 Pàgines més Visitades</h3>
-
         <canvas id="chartPagines"></canvas>
     </div>
 
-    <script>
+    <!-- USERS -->
+    <div style="flex:1; min-width:400px;">
+        <h3>Top 5 Users més Actius</h3>
+        <canvas id="chartUsers"></canvas>
+    </div>
 
-        const colores = [
-            '#FF6384',
-            '#36A2EB',
-            '#FFCE56',
-            '#4BC0C0',
-            '#9966FF'
-        ];
+</div>
 
-        const ctx = document
-            .getElementById('chartPagines')
-            .getContext('2d');
+<!-- CHART PÁGINAS -->
+<script>
+const colores = ['#FF6384','#36A2EB','#FFCE56','#4BC0C0','#9966FF'];
 
-        new Chart(ctx, {
+new Chart(document.getElementById('chartPagines'), {
+    type: 'bar',
+    data: {
+        labels: <?= json_encode($labelsPagines) ?>,
+        datasets: [{
+            label: 'Visites',
+            data: <?= json_encode($valorsPagines) ?>,
+            backgroundColor: colores
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true } }
+    }
+});
+</script>
 
-            type: 'bar',
+<!-- CHART USERS -->
+<script>
+const coloresUsers = ['#FF6384','#36A2EB','#FFCE56','#4BC0C0','#9966FF'];
 
-            data: {
-
-                labels: <?php echo json_encode($labels); ?>,
-
-                datasets: [{
-
-                    label: 'Número de visites',
-
-                    data: <?php echo json_encode($valors); ?>,
-
-                    backgroundColor: colores,
-
-                    borderWidth: 1
-                }]
-            },
-
-            options: {
-
-                responsive: true,
-
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-
-    </script>
+new Chart(document.getElementById('chartUsers'), {
+    type: 'bar',
+    data: {
+        labels: <?= json_encode($labelsUsers) ?>,
+        datasets: [{
+            label: 'Users',
+            data: <?= json_encode($valorsUsers) ?>,
+            backgroundColor: coloresUsers
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true } }
+    }
+});
+</script>
 
 <?php
 
 } catch (Exception $e) {
-
-    echo "
-    <div class='error'>
-        Error al carregar les estadístiques:
-        " . $e->getMessage() . "
-    </div>";
+    echo "<div class='error'>Error al carregar les estadístiques: " . $e->getMessage() . "</div>";
 }
 
 ?>
@@ -219,5 +252,4 @@ try {
 </body>
 
 <?php include_once "../globals/footer.php"; ?>
-
 </html>
