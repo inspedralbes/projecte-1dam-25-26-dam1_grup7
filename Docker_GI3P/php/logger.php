@@ -5,7 +5,7 @@ use MongoDB\Client;
 
 function registrarLog() {
     $inici = microtime(true);
-    $usuari_id = $_SESSION['user_id'] ?? 'Anònim';
+    $usuari_id = $_SESSION['usuari'] ?? 'Anònim';
 
     try {
         $client = new Client("mongodb+srv://admin:example@gi3p.rjbxiyc.mongodb.net/?appName=GI3P");
@@ -16,7 +16,7 @@ function registrarLog() {
         $LOG = [
             'url'               => $_SERVER['REQUEST_URI'],
             'metode'            => $_SERVER['REQUEST_METHOD'],
-            'usuari_id'         => $usuari_id,
+            'usuari'         => $usuari_id,
             'timestamp'         => new MongoDB\BSON\UTCDateTime(),
             'navegador'         => $_SERVER['HTTP_USER_AGENT'],
             'ip'                => $_SERVER['REMOTE_ADDR'],
