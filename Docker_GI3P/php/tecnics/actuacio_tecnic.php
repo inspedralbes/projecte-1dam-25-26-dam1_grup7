@@ -30,17 +30,18 @@ function crear_incidencia($conn)
 
     echo "<h3 style='text-align: center;'> Incidències </h3>";
     if ($result && $result->num_rows > 0) {
-        echo "<table style='width: 90%; margin: 20px auto; border-collapse: collapse; border: 1px solid black;'>";
-        echo "<tr style='background-color: #f2f2f2;'>";
-        echo "<th style='border: 1px solid black; padding: 12px 15px; text-align: left;'>ID</th>";
-        echo "<th style='border: 1px solid black; padding: 12px 15px; text-align: left;'>Data Inici</th>";
-        echo "<th style='border: 1px solid black; padding: 12px 15px; text-align: left;'>Prioritat</th>";
-        echo "<th style='border: 1px solid black; padding: 12px 15px; text-align: left;'>Descripció</th>";
-        echo "<th style='border: 1px solid black; padding: 12px 15px; text-align: left;'>Data Fi</th>";
-        echo "<th style='border: 1px solid black; padding: 12px 15px; text-align: left;'>Departament</th>";
-        echo "<th style='border: 1px solid black; padding: 12px 15px; text-align: left;'>Tipologia</th>";
-        echo "<th style='border: 1px solid black; padding: 12px 15px; text-align: left;'>Actuacions</th>";
+        echo "<div class='table-container'><table class='modern-table'><thead>";
+        echo "<tr style='background-color: var(--tech-main);'>";
+        echo "<th>ID</th>";
+        echo "<th>Data Inici</th>";
+        echo "<th>Prioritat</th>";
+        echo "<th>Descripció</th>";
+        echo "<th>Data Fi</th>";
+        echo "<th>Departament</th>";
+        echo "<th>Tipologia</th>";
+        echo "<th>Actuacions</th>";
         echo "</tr>";
+        echo "</thead>";
 
         while ($row = $result->fetch_assoc()) {
             $id_incidencia = $row['id'];
@@ -50,27 +51,28 @@ function crear_incidencia($conn)
             $row_cont = $res_cont->fetch_assoc();
             $total_actuacions = $row_cont['total'];
             if ($row["prioritat"] == "Baix") {
-                $color = "var(--baix-color)"; 
+                $status = "stats baixa"; 
             } elseif ($row["prioritat"] == "Mitjà") {
-                $color = "var(--mitja-color)"; 
+                $status = "stats mitjana"; 
             } elseif ($row["prioritat"] == "Alt") {
-                $color = "var(--alt-color)"; 
+                $status = "stats alta"; 
             } else {
-                $color = "white"; 
+                $status = "white"; 
             }
             echo "<tr onclick=\"window.location='crear_actuacions.php?id=" . $row["id"] . "';\" style='cursor: pointer;'>";
-            echo "<td style='border: 1px solid black; padding: 12px 15px;'>" . $row["id"] . "</td>";
-            echo "<td style='border: 1px solid black; padding: 12px 15px;'>" . $row["dataInici"] . "</td>";
-            echo "<td style='border: 1px solid black; padding: 12px 15px; background-color: $color;'>" . $row["prioritat"] . "</td>";
-            echo "<td style='border: 1px solid black; padding: 12px 15px;'>" . $row["descripcio"] . "</td>";
-            echo "<td style='border: 1px solid black; padding: 12px 15px;'>" . $row["dataFi"] . "</td>";
-            echo "<td style='border: 1px solid black; padding: 12px 15px;'>" . $row["departament"] . "</td>";
-            echo "<td style='border: 1px solid black; padding: 12px 15px;'>" . $row["tipologia"] . "</td>";
-            echo "<td style='border: 1px solid black; padding: 12px 15px; text-align: center;'>" . $total_actuacions . "</td>";
+            echo "<td>" . $row["id"] . "</td>";
+            echo "<td>" . $row["dataInici"] . "</td>";
+            echo "<td><span class='$status'>{$row['prioritat']}</span></td>";
+            echo "<td>" . $row["descripcio"] . "</td>";
+            echo "<td>" . $row["dataFi"] . "</td>";
+            echo "<td>" . $row["departament"] . "</td>";
+            echo "<td>" . $row["tipologia"] . "</td>";
+            echo "<td>" . $total_actuacions . "</td>";
             echo "</tr>";
 
         }
         echo "</table>";
+        echo "</div>";
     } else {
         echo "<p style='text-align: center;'>No s'han trobat incidències per a aquest tècnic.</p>";
     }
@@ -119,7 +121,7 @@ function crear_incidencia($conn)
                     }
                     echo "</select>";
                     ?>
-                    <input type="submit" value="enviar">
+                    <input class="input-tech" type="submit" value="enviar">
                 </fieldset>
             </form>
         </main>

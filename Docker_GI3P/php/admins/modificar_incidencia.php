@@ -31,6 +31,9 @@ if (isset($_GET['id'])){
 
         if ($stmt->execute()) {
         echo "<p class='info'>Incidencia assignada amb èxit!</p>";
+        ?>
+        <head><meta http-equiv="refresh" content="1;url=assignar_incidencia.php"></head>
+        <?php
         } else {
         echo "<p class='error'>Error al assignar l'incidencia: " . htmlspecialchars($stmt->error) . "</p>";
         }
@@ -50,39 +53,42 @@ if (isset($_GET['id'])){
     ?>
     <main>
     <form class="ignore-css" method="POST" action="?id=<?php echo $id_incidencia;?>">
-    <table>
-        <tr style="border: 1px solid black;">
-            <th style="border: 1px solid black;">
+    <div class="table-container">
+    <table class="modern-table">
+    <thead>
+        <tr style="background-color: var(--admin-main);">
+            <th>
                 ID
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Data Inici
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Prioritat
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Descripció
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Data Fi
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Tecnic Assignat
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Departament
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Tipologia
             </th>
         </tr>
+</thead>
         <?php
        while ($row = $result->fetch_assoc()) {
-        echo "<tr style='border: 1px solid black;'>";
-        echo "<td style='border: 1px solid black;'>" . $row["id"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["dataInici"] . "</td>";
-        echo "<td style='border: 1px solid black;'>";
+        echo "<tr>";
+        echo "<td>" . $row["id"] . "</td>";
+        echo "<td>" . $row["dataInici"] . "</td>";
+        echo "<td>";
         echo "<select name="."prio". ">";
         
         echo "<option>Baix</option>";
@@ -90,9 +96,9 @@ if (isset($_GET['id'])){
         echo "<option>Alt</option>";
         echo "</select>";
         echo "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["descripcio"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["dataFi"] . "</td>";
-        echo "<td style='border: 1px solid black;'>";
+        echo "<td>" . $row["descripcio"] . "</td>";
+        echo "<td>" . $row["dataFi"] . "</td>";
+        echo "<td>";
         echo "<select name="."tech". ">";
         
         while ($rowTech = $resultTech->fetch_assoc()) {
@@ -100,8 +106,8 @@ if (isset($_GET['id'])){
         }
         echo "</select>";
         echo "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["departament"] . "</td>";
-        echo "<td style='border: 1px solid black;'>";
+        echo "<td>" . $row["departament"] . "</td>";
+        echo "<td>";
         echo "<select name="."tipo". ">";
         
         while ($rowTipo = $resultTipo->fetch_assoc()) {
@@ -113,10 +119,9 @@ if (isset($_GET['id'])){
         }
     ?>
     </table>
+</div>
 
-    
-
-    <input type="submit" value="Guardar">
+    <input class="input-admin" type="submit" value="Guardar">
 </form>
 </main>
 <?php 

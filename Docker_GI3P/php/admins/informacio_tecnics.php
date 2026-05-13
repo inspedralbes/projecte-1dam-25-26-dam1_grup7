@@ -61,6 +61,7 @@ require_once '../globals/connexio.php';
         echo "<div style='display: flex; flex-wrap: wrap; justify-content: space-around; gap: 20px; margin-top: 30px;'>";
         echo "<div style='width: 400px; text-align: center;'>
                     <h3>Núm. d'Incidències</h3>
+                    <p>Selecciona'n un per a més informació</p>
                     <canvas id='chartIncidencies'></canvas>
                   </div>";
 

@@ -38,6 +38,9 @@ function crear_incidencia($conn)
     // Executar la consulta i comprovar si s'ha inserit correctament
     if ($stmt->execute()) {
         echo "<p class='info'>Incidencia creada amb èxit!</p>";
+        ?>
+        <head><meta http-equiv="refresh" content="1;url=usuaris.php"></head>
+        <?php
     } else {
         echo "<p class='error'>Error al crear l'incidencia: " . htmlspecialchars($stmt->error) . "</p>";
     }
@@ -100,7 +103,7 @@ function crear_incidencia($conn)
                     <label for="desc">Descripció</label>
                     <textarea id="desc" name="desc" placeholder="Descriu la incidència..."></textarea>
 
-                    <input type="submit" value="Crear incidència">
+                    <input class="input-user" type="submit" value="Crear incidència">
                 </fieldset>
             </form>
         </main>

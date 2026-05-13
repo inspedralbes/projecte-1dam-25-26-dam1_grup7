@@ -14,58 +14,62 @@
 
     <?php $sql = "SELECT * FROM incidencia";
     $result = $conn->query($sql); ?>
-    <table>
-        <tr style="border: 1px solid black;">
-            <th style="border: 1px solid black;">
+    <div class="table-container">
+    <table class="modern-table">
+    <thead>
+        <tr style="background-color: var(--admin-main);">
+            <th>
                 ID
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Data Inici
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Prioritat
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Descripció
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Data Fi
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Tecnic Assignat
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Departament
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Tipologia
             </th>
         </tr>
+</thead>
         <?php
         while ($row = $result->fetch_assoc()) {
             if ($row["prioritat"] == "Baix") {
-                $color = "var(--baix-color)"; 
+                $status = "stats baixa"; 
             } elseif ($row["prioritat"] == "Mitjà") {
-                $color = "var(--mitja-color)"; 
+                $status = "stats mitjana"; 
             } elseif ($row["prioritat"] == "Alt") {
-                $color = "var(--alt-color)"; 
+                $status = "stats alta"; 
             } else {
-                $color = "white"; 
+                $status = "white"; 
             }
             echo "<tr onclick=\"window.location='veure_actuacions_admin.php?id=" . $row["id"] . "';\" style='cursor: pointer;'>";
-            echo "<td style='border: 1px solid black;'>" . $row["id"] . "</td>";
-            echo "<td style='border: 1px solid black;'>" . $row["dataInici"] . "</td>";
-            echo "<td style='border: 1px solid black; background-color: $color;'>" . $row["prioritat"] . "</td>";
-            echo "<td style='border: 1px solid black;'>" . $row["descripcio"] . "</td>";
-            echo "<td style='border: 1px solid black;'>" . $row["dataFi"] . "</td>";
-            echo "<td style='border: 1px solid black;'>" . $row["tecnic"] . "</td>";
-            echo "<td style='border: 1px solid black;'>" . $row["departament"] . "</td>";
-            echo "<td style='border: 1px solid black;'>" . $row["tipologia"] . "</td>";
+            echo "<td>" . $row["id"] . "</td>";
+            echo "<td>" . $row["dataInici"] . "</td>";
+            echo "<td><span class='$status'>{$row['prioritat']}</span></td>";
+            echo "<td>" . $row["descripcio"] . "</td>";
+            echo "<td>" . $row["dataFi"] . "</td>";
+            echo "<td>" . $row["tecnic"] . "</td>";
+            echo "<td>" . $row["departament"] . "</td>";
+            echo "<td>" . $row["tipologia"] . "</td>";
             echo "</td>";
             echo "</tr>";
         }
         ?>
     </table>
+</div>
     <?php
     function crear_incidencia($conn)
     {

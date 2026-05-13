@@ -36,10 +36,8 @@ try {
     $client = new MongoDB\Client("mongodb+srv://admin:example@gi3p.rjbxiyc.mongodb.net/?appName=GI3P");
     $collection = $client->Logs->registres_connexio;
 
-    // USUARIOS (dropdown)
     $usuarisDisponibles = $collection->distinct('usuari');
 
-    // FILTRE TIEMPO
     $filtro = $_GET['temps'] ?? 'tots';
 
     $fechaInicio = null;
@@ -58,7 +56,6 @@ try {
             break;
     }
 
-    // CONDICIONES
     $condicio = [];
 
     if ($fechaInicio != null) {
@@ -69,12 +66,8 @@ try {
         $condicio['usuari'] = $_GET['usuari'];
     }
 
-    // TOTAL
     $total_global = $collection->countDocuments($condicio);
 
-    // =========================
-    // TOP PÀGINES (SIN FILTRO URL)
-    // =========================
     $pipeline = [];
 
     if (!empty($condicio)) {
@@ -101,9 +94,7 @@ try {
         $valorsPagines[] = $pagina['count'];
     }
 
-    // =========================
-    // TOP USERS
-    // =========================
+
     $pipeline2 = [];
 
     if (!empty($condicio)) {
@@ -132,12 +123,8 @@ try {
 
 ?>
 
-<!-- ========================= -->
-<!-- TOP BAR -->
-<!-- ========================= -->
 <div style="display:flex; justify-content:space-between; align-items:flex-start; margin:20px 40px; gap:20px;">
 
-    <!-- CONTADOR -->
     <div class="access-counter-container">
         <div class="access-counter-card">
             <h3>Total d'accessos</h3>
@@ -145,10 +132,8 @@ try {
         </div>
     </div>
 
-    <!-- FILTROS -->
     <form method="GET" style="display:flex; gap:15px; align-items:center; flex-wrap:wrap; justify-content:flex-end;">
 
-        <!-- TIEMPO -->
         <div>
             <label><strong>Temps:</strong></label>
             <select name="temps">
@@ -157,10 +142,7 @@ try {
                 <option value="7dies" <?= $filtro == '7dies' ? 'selected' : '' ?>>7 dies</option>
                 <option value="30dies" <?= $filtro == '30dies' ? 'selected' : '' ?>>30 dies</option>
             </select>
-        </div>
 
-        <!-- USUARIO -->
-        <div>
             <label><strong>Usuari:</strong></label>
             <select name="usuari">
                 <option value="">Tots</option>
@@ -170,26 +152,19 @@ try {
                     </option>
                 <?php endforeach; ?>
             </select>
+            <button id="filtrar-btn" type="submit">Filtrar</button>
         </div>
-
-        <button type="submit">Filtrar</button>
-
     </form>
 
 </div>
 
-<!-- ========================= -->
-<!-- GRÁFICOS -->
-<!-- ========================= -->
 <div style="display:flex; justify-content:space-between; gap:40px; margin:40px; align-items:flex-start;">
 
-    <!-- PÁGINAS -->
     <div style="flex:1; min-width:400px;">
         <h3>Top 5 Pàgines més Visitades</h3>
         <canvas id="chartPagines"></canvas>
     </div>
 
-    <!-- USERS -->
     <div style="flex:1; min-width:400px;">
         <h3>Top 5 Users més Actius</h3>
         <canvas id="chartUsers"></canvas>
@@ -197,7 +172,6 @@ try {
 
 </div>
 
-<!-- CHART PÁGINAS -->
 <script>
 const colores = ['#FF6384','#36A2EB','#FFCE56','#4BC0C0','#9966FF'];
 
@@ -219,7 +193,6 @@ new Chart(document.getElementById('chartPagines'), {
 });
 </script>
 
-<!-- CHART USERS -->
 <script>
 const coloresUsers = ['#FF6384','#36A2EB','#FFCE56','#4BC0C0','#9966FF'];
 

@@ -27,94 +27,100 @@ if (isset($_GET['id'])) {
     $total = $row_cont['total'];
 
     ?>
-    <table>
-        <tr style="border: 1px solid black;">
-            <th style="border: 1px solid black;">
+    <div class="table-container">
+    <table class="modern-table">
+    <thead>
+        <tr style="background-color: var(--user-main);">
+            <th>
                 ID
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Data Inici
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Prioritat
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Descripció
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Data Fi
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Tecnic Assignat
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Departament
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Tipologia
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Actuacións
             </th>
         </tr>
+</thead>
         <?php
        while ($row = $result->fetch_assoc()) {
-        if ($row["prioritat"] == "Baix") {
-                $color = "var(--baix-color)"; 
+            if ($row["prioritat"] == "Baix") {
+                $status = "stats baixa"; 
             } elseif ($row["prioritat"] == "Mitjà") {
-                $color = "var(--mitja-color)"; 
+                $status = "stats mitjana"; 
             } elseif ($row["prioritat"] == "Alt") {
-                $color = "var(--alt-color)"; 
+                $status = "stats alta"; 
             } else {
-                $color = "white"; 
+                $status = "white"; 
             }
-        echo "<tr style='border: 1px solid black;'>";
-        echo "<td style='border: 1px solid black;'>" . $row["id"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["dataInici"] . "</td>";
-        echo "<td style='border: 1px solid black; background-color: $color;'>" . $row["prioritat"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["descripcio"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["dataFi"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["tecnic"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["departament"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $row["tipologia"] . "</td>";
-        echo "<td style='border: 1px solid black;'>" . $total . "</td>";
+        echo "<tr>";
+        echo "<td>" . $row["id"] . "</td>";
+        echo "<td>" . $row["dataInici"] . "</td>";
+        echo "<td><span class='$status'>{$row['prioritat']}</span></td>";
+        echo "<td>" . $row["descripcio"] . "</td>";
+        echo "<td>" . $row["dataFi"] . "</td>";
+        echo "<td>" . $row["tecnic"] . "</td>";
+        echo "<td>" . $row["departament"] . "</td>";
+        echo "<td>" . $row["tipologia"] . "</td>";
+        echo "<td>" . $total . "</td>";
         echo "</tr>";
         }
         ?>
     </table>
+</div>
     <hr>
     <?php $sql = "SELECT * FROM actuacions where incidencia = $id_incidencia ORDER BY dataActuacio ";
     $result = $conn->query($sql); ?>
-
-     <table>
-        <tr style="border: 1px solid black;">
-            <th style="border: 1px solid black;">
+    <div class="table-container">
+    <table class="modern-table">
+     <thead>
+        <tr  style="background-color: var(--user-main);">
+            <th>
                 ID Actuacio
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Data Actuacio
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 Descripció
             </th>
         
-            <th style="border: 1px solid black;">
+            <th>
                 Temps total
             </th>
-            <th style="border: 1px solid black;">
+            <th>
                 ID Incidència
             </th>
         </tr>
+</thead>
         <?php
         $numIncidencia = 1;
         while ($row = $result->fetch_assoc()) {
             if ($row["visible"] == "1") {
-                echo "<tr style='border: 1px solid black;'>";
-                echo "<td style='border: 1px solid black;'>" . $numIncidencia . "</td>";
-                echo "<td style='border: 1px solid black;'>" . $row["dataActuacio"] . "</td>";
-                echo "<td style='border: 1px solid black;'>" . $row["descActuacio"] . "</td>";
-                echo "<td style='border: 1px solid black;'>" . $row["temps"] . " minuts" . "</td>";
-                echo "<td style='border: 1px solid black;'>" . $row["incidencia"] . "</td>";
+                echo "<tr>";
+                echo "<td>" . $numIncidencia . "</td>";
+                echo "<td>" . $row["dataActuacio"] . "</td>";
+                echo "<td>" . $row["descActuacio"] . "</td>";
+                echo "<td>" . $row["temps"] . " minuts" . "</td>";
+                echo "<td>" . $row["incidencia"] . "</td>";
                 echo "</tr>";
                 $numIncidencia++;
             }
@@ -122,6 +128,7 @@ if (isset($_GET['id'])) {
         }
         ?>
     </table>
+</div>
 </body>
 <?php include_once "../globals/footer.php";?>
 </html>
