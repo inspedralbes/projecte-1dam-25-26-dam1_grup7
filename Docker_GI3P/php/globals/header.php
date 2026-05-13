@@ -1,4 +1,12 @@
 <?php include_once("auth.php"); ?>
+<?php
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->safeLoad();
+?>
 <!DOCTYPE html>
 <html lang="ca">
 
