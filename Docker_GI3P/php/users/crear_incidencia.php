@@ -20,6 +20,7 @@ function crear_incidencia($conn)
 
     if (empty($descripcio)) {
         echo "<script>DescripcioBuida();</script>";
+        echo "<script>history.back();</script>";
         return;
     }
 

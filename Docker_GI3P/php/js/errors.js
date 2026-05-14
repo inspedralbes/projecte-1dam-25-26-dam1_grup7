@@ -1,4 +1,7 @@
 function DescripcioBuida() {
     alert("Error: La descripció no pot estar buida");
-    history.back();
+}
+
+function tempsBuida() {
+    alert("Error: El temps no pot estar buit");
 }

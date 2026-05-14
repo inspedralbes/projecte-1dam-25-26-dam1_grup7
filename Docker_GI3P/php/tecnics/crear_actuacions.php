@@ -2,7 +2,7 @@
 <?php include_once "../globals/header.php"; ?>
 <?php require_once '../globals/connexio.php'; ?>
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'] . '/logger.php');?>
+include_once($_SERVER['DOCUMENT_ROOT'] . '/logger.php'); ?>
 
 <?php
 if (isset($_GET['id'])) {
@@ -15,6 +15,7 @@ if (isset($_GET['id'])) {
         <span class="arrow">←</span> Tornar
     </a>
     <h1>Crear Actuació</h1>
+    <script src="../js/errors.js"></script>
 </header>
 <hr>
 
@@ -31,51 +32,51 @@ if (isset($_GET['id'])) {
     $incidencia_finalitzada = false;
     ?>
     <div class="table-container">
-    <table class="modern-table">
-    <thead>
-        <tr style="background-color: var(--tech-main);">
-            <th>ID</th>
-            <th>Data Inici</th>
-            <th>Prioritat</th>
-            <th>Descripció</th>
-            <th>Data Fi</th>
-            <th>Tecnic Assignat</th>
-            <th>Departament</th>
-            <th>Tipologia</th>
-            <th>Actuacións</th>
-        </tr>
-</thead>
-        <?php
-        while ($row = $result->fetch_assoc()) {
-            
-            if (!empty($row["dataFi"])) {
-                $incidencia_finalitzada = true;
-            }
-            if ($row["prioritat"] == "Baix") {
-                $status = "stats baixa"; 
-            } elseif ($row["prioritat"] == "Mitjà") {
-                $status = "stats mitjana"; 
-            } elseif ($row["prioritat"] == "Alt") {
-                $status = "stats alta"; 
-            } else {
-                $status = "white"; 
-            }
+        <table class="modern-table">
+            <thead>
+                <tr style="background-color: var(--tech-main);">
+                    <th>ID</th>
+                    <th>Data Inici</th>
+                    <th>Prioritat</th>
+                    <th>Descripció</th>
+                    <th>Data Fi</th>
+                    <th>Tecnic Assignat</th>
+                    <th>Departament</th>
+                    <th>Tipologia</th>
+                    <th>Actuacións</th>
+                </tr>
+            </thead>
+            <?php
+            while ($row = $result->fetch_assoc()) {
 
-            echo "<tr>";
-            echo "<td>" . $row["id"] . "</td>";
-            echo "<td>" . $row["dataInici"] . "</td>";
-            echo "<td><span class='$status'>{$row['prioritat']}</span></td>";
-            echo "<td>" . $row["descripcio"] . "</td>";
-            echo "<td>" . $row["dataFi"] . "</td>";
-            echo "<td>" . $row["tecnic"] . "</td>";
-            echo "<td>" . $row["departament"] . "</td>";
-            echo "<td>" . $row["tipologia"] . "</td>";
-            echo "<td>" . $total . "</td>";
-            echo "</tr>";
-        }
-        ?>
-    </table>
-</div>
+                if (!empty($row["dataFi"])) {
+                    $incidencia_finalitzada = true;
+                }
+                if ($row["prioritat"] == "Baix") {
+                    $status = "stats baixa";
+                } elseif ($row["prioritat"] == "Mitjà") {
+                    $status = "stats mitjana";
+                } elseif ($row["prioritat"] == "Alt") {
+                    $status = "stats alta";
+                } else {
+                    $status = "white";
+                }
+
+                echo "<tr>";
+                echo "<td>" . $row["id"] . "</td>";
+                echo "<td>" . $row["dataInici"] . "</td>";
+                echo "<td><span class='$status'>{$row['prioritat']}</span></td>";
+                echo "<td>" . $row["descripcio"] . "</td>";
+                echo "<td>" . $row["dataFi"] . "</td>";
+                echo "<td>" . $row["tecnic"] . "</td>";
+                echo "<td>" . $row["departament"] . "</td>";
+                echo "<td>" . $row["tipologia"] . "</td>";
+                echo "<td>" . $total . "</td>";
+                echo "</tr>";
+            }
+            ?>
+        </table>
+    </div>
     <hr>
 
     <?php
@@ -88,14 +89,15 @@ if (isset($_GET['id'])) {
         $finalitzat = $_POST['final'];
 
         if (empty($temps)) {
-            echo "<p class='error'>El Temps no pot estar buit.</p>";
+            echo "<script>tempsBuida();</script>";
             return;
         }
 
         if (empty($descripcio)) {
-            echo "<p class='error'>La Descripció no pot estar buida.</p>";
+            echo "<script>DescripcioBuida();</script>";
             return;
         }
+
         $sql = "INSERT INTO actuacions (dataActuacio, descActuacio, visible, temps, incidencia) VALUES (NOW(), ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("siii", $descripcio, $visible, $temps, $id_incidencia);
@@ -103,12 +105,11 @@ if (isset($_GET['id'])) {
         // Executar la consulta i comprovar errors
         if ($stmt->execute()) {
             echo "<p class='success'>Actuació creada correctament.</p>";
-        }
-        else{
+        } else {
             echo "<p class='error'>Error al crear l'actuació: " . htmlspecialchars($stmt->error) . "</p>";
         }
         registrarLog();
-        
+
         if ($finalitzat == "1") {
             $sql = "UPDATE incidencia SET dataFI = NOW() WHERE id = ?";
             $stmt_upd = $conn->prepare($sql);
@@ -174,32 +175,32 @@ if (isset($_GET['id'])) {
     $result = $conn->query($sql);
     ?>
     <div class="table-container">
-    <table class="modern-table">
-     <thead>
-        <tr style="background-color: var(--tech-main);">
-            <th>ID Actuacio</th>
-            <th>Data Actuacio</th>
-            <th>Descripció</th>
-            <th>Visible</th>
-            <th>Temps total</th>
-            <th>ID</th>
-        </tr>
-</thead>
-        <?php
-        $numIncidencia = 1;
-        while ($row = $result->fetch_assoc()) {
-            echo "<tr>";
-            echo "<td>" . $numIncidencia . "</td>";
-            echo "<td>" . $row["dataActuacio"] . "</td>";
-            echo "<td>" . $row["descActuacio"] . "</td>";
-            echo "<td>" . $row["visible"] . "</td>";
-            echo "<td>" . $row["temps"] . "</td>";
-            echo "<td>" . $row["incidencia"] . "</td>";
-            echo "</tr>";
-            $numIncidencia++;
-        }
-        ?>
-    </table>
+        <table class="modern-table">
+            <thead>
+                <tr style="background-color: var(--tech-main);">
+                    <th>ID Actuacio</th>
+                    <th>Data Actuacio</th>
+                    <th>Descripció</th>
+                    <th>Visible</th>
+                    <th>Temps total</th>
+                    <th>ID</th>
+                </tr>
+            </thead>
+            <?php
+            $numIncidencia = 1;
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . $numIncidencia . "</td>";
+                echo "<td>" . $row["dataActuacio"] . "</td>";
+                echo "<td>" . $row["descActuacio"] . "</td>";
+                echo "<td>" . $row["visible"] . "</td>";
+                echo "<td>" . $row["temps"] . "</td>";
+                echo "<td>" . $row["incidencia"] . "</td>";
+                echo "</tr>";
+                $numIncidencia++;
+            }
+            ?>
+        </table>
     </div>
 
 </body>
