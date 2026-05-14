@@ -2,7 +2,6 @@
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . '/logger.php');?>
 <?php
-
 //Sempre volem tenir una connexió a la base de dades, així que la creem al principi del fitxer
 require_once '../globals/connexio.php';
 // Un cop inclòs el fitxer connexio.php, ja podeu utilitzar la variable $conn per a fer les consultes a la base de dades.
@@ -19,14 +18,8 @@ function crear_incidencia($conn)
 
     $descripcio = $_POST['desc'];
 
-
-    if (empty($departament)) {
-        echo "<p class='error'>El Departament no pot estar buit.</p>";
-        return;
-    }
-
     if (empty($descripcio)) {
-        echo "<p class='error'>La Descripció no pot estar buida.</p>";
+        echo "<script>DescripcioBuida();</script>";
         return;
     }
 
@@ -66,6 +59,7 @@ function crear_incidencia($conn)
         <span class="arrow">←</span> Tornar
     </a>
     <h1>Crear una Incidència</h1>
+    <script src="../js/errors.js"></script>
 </header>
 <hr>
 
@@ -112,6 +106,7 @@ function crear_incidencia($conn)
         <?php
         //Tanquem l'else
     }
+
     ?>
 </body>
 <?php include_once "../globals/footer.php"; ?>

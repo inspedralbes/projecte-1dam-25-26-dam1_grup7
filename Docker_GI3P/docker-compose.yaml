@@ -9,7 +9,9 @@ services:
     working_dir: /var/www/html
     command: >
       bash -c "
-      composer install &&
+      if [ -f composer.json ]; then
+        composer install --no-interaction --optimize-autoloader;
+      fi &&
       apache2-foreground
       "
     depends_on:
