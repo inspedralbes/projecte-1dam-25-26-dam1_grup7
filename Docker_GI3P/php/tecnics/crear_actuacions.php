@@ -19,7 +19,7 @@ if (isset($_GET['id'])) {
 </header>
 <hr>
 
-<body>
+<body class="page-tecnics">
     <?php
     $sql = "SELECT * FROM incidencia where id = $id_incidencia";
     $result = $conn->query($sql);

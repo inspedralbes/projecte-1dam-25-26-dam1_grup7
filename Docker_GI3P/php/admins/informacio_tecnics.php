@@ -34,7 +34,7 @@ require_once '../globals/connexio.php';
 </header>
 <hr>
 
-<body class="page-users">
+<body class="page-admin">
     <?php
 
     $sql = "SELECT t.idTecnic, t.nom AS nom_tecnic, COUNT(DISTINCT i.id) AS total_incidencies,

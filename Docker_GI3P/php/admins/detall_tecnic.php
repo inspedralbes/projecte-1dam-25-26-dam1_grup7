@@ -22,7 +22,7 @@ $nomTecnic = urldecode($_GET['nom']);
 </header>
 <hr>
 
-<body class="page-users">
+<body class="page-admin">
     <?php
     $sql = "SELECT COUNT(i.dataFi) AS resoltes, (COUNT(i.id) - COUNT(i.dataFi)) AS en_proces
             FROM incidencia i JOIN tecnic t ON i.tecnic = t.idTecnic WHERE t.nom = '$nomTecnic'";

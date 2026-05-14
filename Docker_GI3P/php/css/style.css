@@ -431,3 +431,8 @@ input[type="submit"]:hover {
   background-color: #ffbcc6;
   color: #c62828;
 }
+
+.info{
+    text-align: center;
+    font-size: 1.2rem;
+}

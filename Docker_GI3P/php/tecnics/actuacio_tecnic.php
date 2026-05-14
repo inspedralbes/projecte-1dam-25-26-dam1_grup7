@@ -94,7 +94,7 @@ function crear_incidencia($conn)
 </header>
 <hr>
 
-<body>
+<body class="page-tecnics">
 
     <?php
 
