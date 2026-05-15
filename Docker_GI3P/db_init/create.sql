@@ -33,11 +33,14 @@ CREATE TABLE `departament` (
   PRIMARY KEY (`idDept`)
 ) ENGINE=InnoDB;
 
-CREATE TABLE `tecnic` (
-  `idTecnic` int(9) NOT NULL AUTO_INCREMENT,
-  `nom` varchar(255) NOT NULL,
-  PRIMARY KEY (`idTecnic`)
+CREATE TABLE `Users` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `Nom` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Password` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Rol` enum('user','tecnic','admin') COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB;
+
 
 CREATE TABLE `tipologia` (
   `idTipo` int(9) NOT NULL AUTO_INCREMENT,
@@ -55,7 +58,7 @@ CREATE TABLE `incidencia` (
   `departament` int(11) DEFAULT NULL,
   `tipologia` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_inc_tecnic` FOREIGN KEY (`tecnic`) REFERENCES `tecnic` (`idTecnic`) ON DELETE SET NULL,
+  CONSTRAINT `fk_inc_tecnic` FOREIGN KEY (`tecnic`) REFERENCES `Users` (`ID`) ON DELETE SET NULL,
   CONSTRAINT `fk_inc_dept` FOREIGN KEY (`departament`) REFERENCES `departament` (`idDept`) ON DELETE SET NULL,
   CONSTRAINT `fk_inc_tipo` FOREIGN KEY (`tipologia`) REFERENCES `tipologia` (`idTipo`) ON DELETE SET NULL
 ) ENGINE=InnoDB;
@@ -79,13 +82,16 @@ INSERT INTO `departament` (`idDept`, `nom`) VALUES
 (5,	'Història'),
 (6,	'Informàtica');
 
-INSERT INTO `tecnic` (`idTecnic`, `nom`) VALUES
-(1,	'Pere'),
-(2,	'Toni'),
-(3,	'Pau'),
-(4,	'Maria'),
-(5,	'Ermengol'),
-(6,	'Victoria');
+INSERT INTO `Users` (`ID`, `Nom`, `Password`, `Rol`) VALUES
+(1,	'Albert',	'p@ssword123',	'admin'),
+(2,	'Laura',	'secret2026',	'user'),
+(3,	'Joan',	'joan99pass',	'user'),
+(4,	'Marta',	'martaAdmin8',	'admin'),
+(5,	'Carlos',	'carlos_safe',	'tecnic'),
+(6,	'Juanjo',	'p@ssword123',	'tecnic'),
+(7,	'PerroLoco',	'p@ssword123',	'tecnic'),
+(8,	'Manel',	'p@ssword123',	'tecnic'),
+(9,	'Paul',	'p@ssword123',	'tecnic');
 
 INSERT INTO `tipologia` (`idTipo`, `nom`) VALUES
 (1,	'Xarxa'),

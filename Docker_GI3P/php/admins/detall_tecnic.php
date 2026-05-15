@@ -25,7 +25,8 @@ $nomTecnic = urldecode($_GET['nom']);
 <body class="page-admin">
     <?php
     $sql = "SELECT COUNT(i.dataFi) AS resoltes, (COUNT(i.id) - COUNT(i.dataFi)) AS en_proces
-            FROM incidencia i JOIN tecnic t ON i.tecnic = t.idTecnic WHERE t.nom = '$nomTecnic'";
+            FROM incidencia i JOIN Users u ON i.tecnic = u.ID WHERE u.Nom = '$nomTecnic' AND u.Rol = 'tecnic'";
+
 
     $resultat = $conn->query($sql);
     $row = $resultat->fetch_assoc();

@@ -37,9 +37,10 @@ require_once '../globals/connexio.php';
 <body class="page-admin">
     <?php
 
-    $sql = "SELECT t.idTecnic, t.nom AS nom_tecnic, COUNT(DISTINCT i.id) AS total_incidencies,
-    SUM(a.temps) AS total_minuts FROM tecnic t LEFT JOIN incidencia i  ON t.idTecnic = i.tecnic 
-    LEFT JOIN actuacions a ON i.id = a.incidencia GROUP BY t.idTecnic, t.nom HAVING total_incidencies > 0;";
+    $sql = "SELECT u.ID AS idTecnic, u.Nom AS nom_tecnic, COUNT(DISTINCT i.id) AS total_incidencies,
+    SUM(a.temps) AS total_minuts FROM Users u LEFT JOIN incidencia i ON u.ID = i.tecnic 
+    LEFT JOIN actuacions a ON i.id = a.incidencia WHERE u.Rol = 'tecnic' GROUP BY u.ID, u.Nom HAVING total_incidencies > 0;";
+
 
     $resultat = $conn->query($sql);
 
@@ -94,7 +95,7 @@ require_once '../globals/connexio.php';
                     }
                 }
             });
-            
+
             new Chart(document.getElementById('chartHores'), {
                 type: 'doughnut',
                 data: {

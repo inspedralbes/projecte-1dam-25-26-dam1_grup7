@@ -1,3 +1,4 @@
+<?php require_once '../globals/connexio.php'; ?>
 <?php
 
 session_start();
@@ -10,20 +11,15 @@ session_start();
 
 */
 
-$usuaris = array(
+$sql = "SELECT * FROM Users";
+$result = $conn->query($sql);
 
-    "alvaro" => "12345",
+$usuaris = array();
 
-    "joan" => "abc123",
-
-    "maria" => "pass",
-
-    "guest" => "guest"
-
-);
-
+while ($row = $result->fetch_assoc()) {
+    $usuaris[$row['Nom']] = $row['Password'];
+}
 $error = "";
-
 /*
 
     Si ja està autenticat, el redirigim directament
@@ -60,8 +56,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $_SESSION["usuari"] = $usuari;
 
-        header("Location: login_success.php");
+        $sql = "SELECT Rol FROM Users WHERE Nom = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $usuari);
+        $stmt->execute();
 
+        $result = $stmt->get_result();
+
+        if ($row = $result->fetch_assoc()) {
+            $_SESSION["rol"] = $row["Rol"];
+        }
+
+        header("Location: login_success.php");
         exit();
 
     } else {
@@ -87,31 +93,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <div class="login-container">
-    <h1>Inici de sessió</h1>
+        <h1>Inici de sessió</h1>
 
-    <?php
+        <?php
 
-    if ($error != "") {
+        if ($error != "") {
 
-        echo "<p style='color:red;'>$error</p>";
+            echo "<p style='color:red;'>$error</p>";
 
-    }
+        }
 
-    ?>
-    
-    <form method="POST" action="login.php">
-        
-        <label>Usuari:</label>
+        ?>
 
-        <input type="text" name="usuari" required><br>
+        <form method="POST" action="login.php">
 
-        <label>Contrasenya:</label>
+            <label>Usuari:</label>
 
-        <input type="password" name="password" required><br>
+            <input type="text" name="usuari" required><br>
 
-        <button type="submit">Entrar</button>
+            <label>Contrasenya:</label>
 
-    </form>
+            <input type="password" name="password" required><br>
+
+            <button type="submit">Entrar</button>
+
+        </form>
     </div>
 </body>
 

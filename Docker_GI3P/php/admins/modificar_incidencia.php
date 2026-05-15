@@ -42,7 +42,7 @@ if (isset($_GET['id'])){
         ?>
     <?php $sql = "SELECT * FROM incidencia WHERE id = $id_incidencia";
     $result = $conn->query($sql); 
-    $sqlTech = "SELECT * FROM tecnic";
+    $sqlTech = "SELECT * FROM Users WHERE Rol = 'tecnic'";
     $resultTech = $conn->query($sqlTech);
     $sqlTipo = "SELECT * FROM tipologia";
     $resultTipo = $conn->query($sqlTipo);
@@ -102,7 +102,7 @@ if (isset($_GET['id'])){
         echo "<select name="."tech". ">";
         
         while ($rowTech = $resultTech->fetch_assoc()) {
-            echo "  <option value='" . $rowTech["idTecnic"] . "'>" .$rowTech["nom"] . "</option>" ;
+            echo "  <option value='" . $rowTech["ID"] . "'>" .$rowTech["Nom"] . "</option>" ;
         }
         echo "</select>";
         echo "</td>";

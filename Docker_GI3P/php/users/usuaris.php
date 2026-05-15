@@ -2,9 +2,14 @@
 <html>
 <body class="page-users">
     <header>
-        <a href="../index.php" class="btn-back">
-            <span class="arrow">←</span> Tornar
-        </a>
+        <?php
+        if ($_SESSION["rol"] == "admin") {
+            echo '<a href="../index.php" class="btn-back">
+                <span class="arrow">←</span> Tornar
+            </a>';
+        }
+        ?>
+        <button id="logout-btn"><a href="../globals/logout.php">Tancar sessió</a></button>
         <h1>Gestor d'incidències per a Usuaris</h1>
     </header>
         <hr>

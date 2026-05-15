@@ -1,6 +1,7 @@
 <?php include_once "../globals/header.php"; ?>
 <?php require_once '../globals/connexio.php'; ?>
-<?php include_once($_SERVER['DOCUMENT_ROOT'] . '/logger.php'); registrarLog();?>
+<?php include_once($_SERVER['DOCUMENT_ROOT'] . '/logger.php');
+registrarLog(); ?>
 
 <?php
 
@@ -18,7 +19,10 @@ if (isset($_GET['id'])) {
  */
 function crear_incidencia($conn)
 {
-    $id_tecnic = $conn->real_escape_string($_POST['tecnic']);
+    $user = $conn->query("SELECT ID FROM Users WHERE Nom = '$_SESSION[usuari]'");
+    $row_user = $user->fetch_assoc();
+    $id_tecnic = $row_user['ID'];
+
 
     if (empty($id_tecnic)) {
         echo "<p class='error'>El ID no pot estar buit.</p>";
@@ -51,13 +55,13 @@ function crear_incidencia($conn)
             $row_cont = $res_cont->fetch_assoc();
             $total_actuacions = $row_cont['total'];
             if ($row["prioritat"] == "Baix") {
-                $status = "stats baixa"; 
+                $status = "stats baixa";
             } elseif ($row["prioritat"] == "Mitjà") {
-                $status = "stats mitjana"; 
+                $status = "stats mitjana";
             } elseif ($row["prioritat"] == "Alt") {
-                $status = "stats alta"; 
+                $status = "stats alta";
             } else {
-                $status = "white"; 
+                $status = "white";
             }
             echo "<tr onclick=\"window.location='crear_actuacions.php?id=" . $row["id"] . "';\" style='cursor: pointer;'>";
             echo "<td>" . $row["id"] . "</td>";
@@ -97,36 +101,7 @@ function crear_incidencia($conn)
 <body class="page-tecnics">
 
     <?php
-
-    
-    // Consulta SQL per obtenir totes les files de la taula 'cases'
-    $sql = "SELECT * FROM departament";
-    $result = $conn->query($sql);
-    $sqlTech = "SELECT * FROM tecnic";
-    $resultTech = $conn->query($sqlTech);
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Si el formulari s'ha enviatc (mètode POST), cridem a la funció per crear la casa
-        crear_incidencia($conn);
-    } else {
-        ?>
-        <main>
-            <form method="POST" action="actuacio_tecnic.php">
-                <fieldset>
-                    <label for="Tecnic">Identifica't:</label>
-                    <?php
-                    echo "<select name=" . " tecnic" . ">";
-                    while ($rowTech = $resultTech->fetch_assoc()) {
-                        echo " <option value='" . $rowTech["idTecnic"] . "'>" . $rowTech["nom"] . "</option>";
-                    }
-                    echo "</select>";
-                    ?>
-                    <input class="input-tech" type="submit" value="enviar">
-                </fieldset>
-            </form>
-        </main>
-        <?php
-    }
+    crear_incidencia($conn);
     ?>
 </body>
 <?php include_once "../globals/footer.php"; ?>
